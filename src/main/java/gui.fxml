@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.web.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="980.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+   <children>
+      <TextField fx:id="text_entry" layoutX="160.0" layoutY="36.0" promptText="Enter HTTP GET REQUEST" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="20.0" />
+      <Label fx:id="status" layoutX="160.0" layoutY="55.0" prefHeight="17.0" prefWidth="105.0" text="Status:" />
+      <Label fx:id="response" layoutX="410.0" layoutY="55.0" text="Response:" />
+      <TextFlow fx:id="payload" layoutX="160.0" layoutY="86.0" prefHeight="388.0" prefWidth="960.0" />
+      <WebView layoutX="160.0" layoutY="468.0" prefHeight="443.0" prefWidth="960.0" />
+      <Button fx:id="btn" layoutX="1141.0" layoutY="20.0" mnemonicParsing="false" text="Run" />
+   </children>
+</AnchorPane>
