@@ -35,7 +35,7 @@
             <HBox>
                <children>
                   <Label prefHeight="17.0" prefWidth="37.0" text="Status:" />
-                  <Label fx:id="status" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="37.0" />
+                  <Label fx:id="status" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="189.0" HBox.hgrow="ALWAYS" />
                   <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
                   <Label text="Reason:" />
                   <Label fx:id="reason" layoutX="500.0" layoutY="10.0" />
@@ -57,7 +57,7 @@
                      <content>
                         <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <content>
-                              <WebView fx:id="webView" disable="true" minHeight="-1.0" minWidth="-1.0"  prefHeight="-1.0" prefWidth="-1.0" />
+                              <WebView fx:id="webView" disable="true" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" />
                            </content>
                         </ScrollPane>
                      </content>

@@ -1,11 +1,13 @@
 package com.github.jan222ik.web;
 
-import com.sun.istack.internal.Nullable;
+
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -27,45 +29,34 @@ public class Client {
     //private static final Pattern regex = Pattern.compile("^(http)://([-a-zA-Z0-9+&@#/%?=~_|!:,.;]*)[-a-zA-Z0-9+&@#/%=~_|]");
     //http://localhost:80/page.html
 
-    public static void main(String... args) {
+    public static void main(@Nullable final String... args) {
         Scanner s = new Scanner(System.in, "UTF-8");
         String line = null;
         if (s.hasNext()) {
             line = s.nextLine();
         }
-        new Client().sendGetRequest(line);
+        try {
+            new Client().sendGetRequest(line);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public Response sendGetRequest(@Nullable final String request) {
+    public Response sendGetRequest(@Nullable final String request) throws IOException {
         if (request != null) {
             Matcher matcher = urlPattern.matcher(request);
             if (matcher.find()) {
-                for (int i = 0; i < namedGroups.length; i++) {
-                    System.out.println("[" + namedGroups[i] +"]:\t" + matcher.group(namedGroups[i]));
+                for (String namedGroup : namedGroups) {
+                    System.out.println("[" + namedGroup + "]:\t" + matcher.group(namedGroup));
                 }
                 String host = matcher.group("host");
                 int port = (matcher.group("portnum")==null)? 80:Integer.parseInt(matcher.group("portnum"));
                 String path = matcher.group("path");
                 String statement = prepareGET(1.1, host, path, false);
-                try {
-                    try {
-                        Socket socket = new Socket(host, port);
-                        boolean sendSuccess = send(statement, socket.getOutputStream());
-                        if (sendSuccess) {
-                            Response receive = receive(socket.getInputStream());
-                        /*
-                        if (receive != null) {
-                            System.out.println("receive.getHeader() = " + receive.getHeader());
-                            System.out.println("receive.getPayload() = " + receive.getPayload());
-                        }
-                        */
-                            return receive;
-                        }
-                    } catch (UnknownHostException unknownHost) {
-                        System.out.println("Unknown Host");
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
+                Socket socket = new Socket(host, port);
+                boolean sendSuccess = send(statement, socket.getOutputStream());
+                if (sendSuccess) {
+                    return receive(socket.getInputStream());
                 }
             }
 
@@ -73,7 +64,7 @@ public class Client {
         return null;
     }
 
-    private Response receive(InputStream inputStream) {
+    private Response receive(@NotNull InputStream inputStream) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             StringBuilder header = new StringBuilder();
@@ -101,7 +92,8 @@ public class Client {
         return null;
     }
 
-    private boolean send(String statement, OutputStream outputStream) {
+    @Contract("!null, !null -> _ ; !null, null -> false ; null,!null -> false")
+    private boolean send(@NotNull final String statement, @NotNull OutputStream outputStream) {
         System.out.println("statement = " + statement);
         try {
             PrintWriter pw = new PrintWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
@@ -113,7 +105,7 @@ public class Client {
         }
     }
 
-    private String prepareGET(double httpVersion, String host, String path, boolean connectionKeepAlive) {
+    private String prepareGET(double httpVersion, @NotNull String host, @Nullable String path, boolean connectionKeepAlive) {
         String ls = "\r\n";
         if (path == null) {
             path = "/";
