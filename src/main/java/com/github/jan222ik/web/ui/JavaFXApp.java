@@ -1,3 +1,5 @@
+package com.github.jan222ik.web.ui;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,7 +17,7 @@ public class JavaFXApp  extends Application {
         URL resource = JavaFXApp.class.getResource("/gui.fxml");
         System.out.println("resource = " + resource);
         Parent root = FXMLLoader.load(resource);
-        stage.setTitle("FXML Welcome");
+        stage.setTitle("SimpleWebBrowser");
         stage.setScene(new Scene(root, 1200, 600));
         stage.show();
     }
