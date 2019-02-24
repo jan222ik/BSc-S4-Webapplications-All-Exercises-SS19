@@ -20,7 +20,7 @@
          <children>
             <HBox>
                <children>
-                  <TextField fx:id="text_entry" onKeyPressed="#checkInputSyntax" promptText="Enter HTTP GET REQUEST" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="text_entry" onKeyPressed="#checkInputSyntax" promptText="Enter URL" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -58,6 +58,24 @@
                         <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
                            <content>
                               <WebView fx:id="webView" disable="true" minHeight="-1.0" minWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" />
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Header Output">
+                     <content>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <content>
+                              <Text fx:id="headeroutput" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="960.0" />
+                           </content>
+                        </ScrollPane>
+                     </content>
+                  </Tab>
+                  <Tab closable="false" text="Get Statement">
+                     <content>
+                        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <content>
+                              <Text fx:id="statement" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="960.0" />
                            </content>
                         </ScrollPane>
                      </content>
