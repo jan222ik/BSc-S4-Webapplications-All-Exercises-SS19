@@ -27,7 +27,7 @@
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
-                    <include> **/*.properties</include>
+                    <include> **/*.fxml</include>
                 </includes>
             </resource>
         </resources>
