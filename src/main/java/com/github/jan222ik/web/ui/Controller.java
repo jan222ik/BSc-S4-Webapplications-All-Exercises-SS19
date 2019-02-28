@@ -11,6 +11,7 @@ import javafx.scene.web.WebView;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.SocketException;
 import java.net.URL;    //Import only for JavaFx
 import java.net.UnknownHostException;
 import java.util.ResourceBundle;
@@ -58,6 +59,9 @@ public class Controller implements Initializable {
         } catch (ConnectException noCon) {
             status.setText("No connection to host");
             text_entry.setStyle("-fx-border-color: red");
+        } catch (SocketException socket) {
+            status.setText("Connection reset");
+            text_entry.setStyle("-fx-border-color: red");
         } catch (IOException e) {
             e.printStackTrace();
             text_entry.setStyle("-fx-border-color: red");
@@ -65,7 +69,7 @@ public class Controller implements Initializable {
     }
 
     public void initialize(URL location, ResourceBundle resources) {
-        text.setText("Enter URL - http:// is implicit.\n\nExamples: \n\thttp://localhost:80\n");
+        text.setText("Enter URL - http:// is implicit.\n\nExamples: \n\thttp://localhost:80\n\twww.google.com\n");
     }
 
     public void checkInputSyntax() {

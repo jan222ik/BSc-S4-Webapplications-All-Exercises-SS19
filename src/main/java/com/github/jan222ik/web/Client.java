@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.*;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
@@ -33,13 +34,13 @@ public class Client {
     private static final String http = "http://";
 
 
-    public static void main(final String... args) {
+    public static void main(@Nullable String... args) {
         boolean cmpExit = false;
         boolean handover = false;
         if (args != null && args[0] != null) {
             handover = true;
         } else {
-            System.out.println("Enter a url of format: [http://][username:[password]@]host[:port][/[port]] or type \"!UI\" to open UI or type \"!exit\" to exit system");
+            System.out.println("Enter a url of format: [http://][username:[password]@]host[:port][/[path]] or type \"!UI\" to open UI or type \"!exit\" to exit system");
         }
         Scanner s = new Scanner(System.in, "UTF-8");
         String line;
@@ -55,7 +56,7 @@ public class Client {
                openUI();
             } else {
                 if (line.equalsIgnoreCase("!exit")) {
-                    break;
+                    System.exit(0);
                 } else  {
                     try {
                         Response response = client.sendGetRequest(implicitHttp(line));
@@ -75,7 +76,7 @@ public class Client {
                                 } else if (line.equalsIgnoreCase("payload")) {
                                     System.out.println("Response Payload = \n" + response.getPayload());
                                 } else if (line.equalsIgnoreCase("statement")) {
-                                    System.out.println("Response Statement \n= " + response.getStatement());
+                                    System.out.println("Response Statement =\n " + response.getStatement());
                                 } else if (line.equalsIgnoreCase("all")) {
                                     System.out.println("Response Header = \n" + response.getHeader());
                                     System.out.println("Response Payload = \n" + response.getPayload());
@@ -90,11 +91,13 @@ public class Client {
                         System.out.println("Unknown Host");
                     } catch (ConnectException connect) {
                         System.out.println("Connection refused by host");
+                    } catch (SocketException socketException) {
+                        System.out.println("Connection reset");
                     } catch (IOException e) {
                         System.out.println("Exception <" + e.getClass().getCanonicalName() + "> was thrown: " + e.getMessage());
                     }
                     if (cmpExit) System.exit(0);
-                    System.out.println("Enter next url of format: [http://][username:[password]@]host[:port][/[port]] or \"!UI\" to open UI");
+                    System.out.println("Enter a url of format: [http://][username:[password]@]host[:port][/[port]] or type \"!UI\" to open UI or type \"!exit\" to exit system");
                 }
             }
         }
@@ -125,7 +128,7 @@ public class Client {
         return null;
     }
 
-    private Response receive(InputStream inputStream, @NotNull final String statement) {
+    private Response receive(InputStream inputStream, @NotNull final String statement) throws SocketException {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             StringBuilder header = new StringBuilder();
@@ -133,7 +136,7 @@ public class Client {
             String line;
             //int i = 0; //Comments for Debug
             boolean head = true;
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 if (head) {
                     if ("".equals(line)) {
                         head = false;
@@ -147,6 +150,8 @@ public class Client {
                 //i++;
             }
             return new Response(header.toString(), payload.toString(), statement);
+        } catch (SocketException s) {
+            throw new SocketException(s.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
         }

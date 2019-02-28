@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -19,6 +20,8 @@ public class JavaFXApp extends Application {
     public void start(Stage stage) throws Exception {
         URL resource = JavaFXApp.class.getResource("/gui.fxml");
         Parent root = FXMLLoader.load(resource);
+        FXMLLoader l = new FXMLLoader();
+        l.getController();
         stage.setTitle("SimpleWebBrowser");
         stage.setScene(new Scene(root, 1200, 600));
         stage.show();
@@ -27,14 +30,14 @@ public class JavaFXApp extends Application {
     public static void main(String... args) {
         if (args.length == 0) {
             System.out.println("Type \"!ui\" to open UI or type \"!console\" to continue in console");
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in, "UTF-8");
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 if (line.equalsIgnoreCase("!ui")) {
                     Application.launch(JavaFXApp.class, (String) null);     //Cast for vararg def
                     break;
                 } else if (line.equalsIgnoreCase("console") || line.equalsIgnoreCase("!console")) {
-                    Client.main((String[]) null);   //Cast vor varArgs
+                    Client.main((String) null);   //Cast vor varArgs
                     break;
                 } else {
                     System.out.println("Unknown Command");
@@ -46,7 +49,7 @@ public class JavaFXApp extends Application {
                 if (args[0].equalsIgnoreCase("!UI")) {
                     Application.launch(JavaFXApp.class, (String) null);     //Cast for vararg def
                 } else if (args[0].equalsIgnoreCase("!console")) {
-                    Client.main((String[]) null);
+                    Client.main((String) null);
                 } else {
                     System.out.println("Unknown !command. Known Args: \"!console\" and \"!ui\"");
                 }
@@ -60,7 +63,7 @@ public class JavaFXApp extends Application {
             } else if (args[1].equalsIgnoreCase("!console") && args[0].charAt(0) != '!') {
                 Client.main(args[0]);
             } else {
-                System.out.println("Args could not be parsed correctly: Possible Combinations for args.length 2: \"URL\", \"!console\" and \"!console\", \"URL\"");
+                System.out.println("Args could not be parsed correctly: Possible Combinations for args of length 2: \"URL\", \"!console\" and \"!console\", \"URL\"");
             }
         } else {
             System.out.println("Too many varargs");
