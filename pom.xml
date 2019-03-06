@@ -28,6 +28,7 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include> **/*.fxml</include>
+                    <include> **/*.html</include>
                 </includes>
             </resource>
         </resources>
@@ -38,5 +39,12 @@
             <artifactId>annotations</artifactId>
             <version>16.0.3</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r05</version>
+        </dependency>
+
     </dependencies>
 </project>

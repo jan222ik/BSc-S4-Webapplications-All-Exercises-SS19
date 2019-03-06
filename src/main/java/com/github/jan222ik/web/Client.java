@@ -179,6 +179,7 @@ public class Client {
      * @param connectionKeepAlive {@Code boolean} close connection ?
      * @return {@Code String} statement
      */
+    @SuppressWarnings("SameParameterValue")
     private String prepareGET(Double httpVersion, @NotNull String host, @Nullable String path, @Nullable String authentication, boolean connectionKeepAlive) {
         String ls = "\r\n";
         if (path == null) {

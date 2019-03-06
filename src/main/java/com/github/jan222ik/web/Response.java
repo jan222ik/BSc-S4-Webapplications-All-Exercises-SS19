@@ -57,17 +57,4 @@ public class Response {
         }
         return "";
     }
-    /*
-                    Pattern p = Pattern.compile("^(HTTP/1.[0|1]) (\\d\\d\\d) (.*)");
-                    Matcher matcher1 = p.matcher();
-                    if (matcher1.find()) {
-
-                        String version = matcher1.group(1);
-                        String code = matcher1.group(2);
-                        String reason = matcher1.group(3);
-                        System.out.println("version = " + version);
-                        System.out.println("code = " + code);
-                        System.out.println("reason = " + reason);
-                    }
-     */
 }
