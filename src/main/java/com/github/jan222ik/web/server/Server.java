@@ -1,6 +1,7 @@
 package com.github.jan222ik.web.server;
 
 import java.io.*;
+import java.lang.reflect.Field;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URISyntaxException;
@@ -14,12 +15,23 @@ import java.util.Map;
  * @author Janik Mayr on 21.02.2019
  */
 public class Server implements Runnable {
-    private String webroot = "./resources/server-pages";
-    Socket socket;
+    private static String webroot;
+    private static Socket socket;
+    private static final String defaultWebroot = "server-pages";
 
 
     public static void main(String... args) {
-        int port = (args != null && args.length > 0) ? Integer.parseInt(args[0]) : 8080;
+        int port = 8080;
+        if (args != null && args.length > 0) {
+            File file = new File(args[0]);
+            if (file.isDirectory() && file.exists()) {
+                System.out.println("Found directory at: " + file.getAbsolutePath());
+                webroot = file.getAbsolutePath();
+            }
+        }
+        else {
+            webroot = defaultWebroot;
+        }
         try {
             ServerSocket serverConnect = new ServerSocket(port);
             System.out.println("Server started.\nListening for connections on port : " + port + " ...\n");
@@ -46,70 +58,93 @@ public class Server implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("socket = " + socket);
+        System.out.println("Connection at socket = " + socket);
         try {
             ClientRequest clientRequest = receive(socket.getInputStream());
-            //System.out.println("clientRequest.getMethod() = " + clientRequest.getMethod());
-            //System.out.println("clientRequest.getPathRequest() = " + clientRequest.getPathRequest());
-            //System.out.println("clientRequest.getMessageBody() = " + clientRequest.getMessageBody());
-            for (Map.Entry<String, String> entry : clientRequest.getRequestHeaders().entrySet()) {
-                //System.out.println(entry.getKey() + " : " + entry.getValue());
+            if (clientRequest != null) {
+                /*
+                System.out.println("clientRequest.getMethod() = " + clientRequest.getMethod());
+                System.out.println("clientRequest.getPathRequest() = " + clientRequest.getPathRequest());
+                System.out.println("clientRequest.getMessageBody() = " + clientRequest.getMessageBody());
+                for (Map.Entry<String, String> entry : clientRequest.getRequestHeaders().entrySet()) {
+                    //System.out.println(entry.getKey() + " : " + entry.getValue());
+                }
+                */
+                send(socket.getOutputStream(), clientRequest);
             }
-            send(socket.getOutputStream(), clientRequest);
-        } catch (HttpFormatException | IOException e) {
-            System.err.println("HTTP ERROR");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    private ClientRequest receive(InputStream inputStream) throws IOException, HttpFormatException {
-        return ClientRequest.parseRequest(new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)));
+    private synchronized ClientRequest receive(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        return ClientRequest.parseRequest(bufferedReader, 10 * 500);
     }
 
-    private void send(OutputStream outputStream, ClientRequest parsedRequest) {
+    private synchronized void send(OutputStream outputStream, ClientRequest parsedRequest) {
         PrintWriter pw = new PrintWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
-        pw.println("HTTP/1.1 200 OK");
-        pw.println("Connection: close");
-        pw.println("\n");
-        String documentContents = getDocumentContents(parsedRequest.getPathRequest());
+        String documentContents = getDocumentContents(parsedRequest.getPathRequest(), false);
         if (documentContents == null) {
-            pw.println("<!DOCTYPE html>\n" +
-                    "<html>\n" +
-                    "<head>\n" +
-                    "<title>Page Title</title>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "\n" +
-                    "<h1>This is a Heading</h1>\n" +
-                    "<p>This is a paragraph.</p>\n" +
-                    "\n" +
-                    "</body>\n" +
-                    "</html>");
+            pw.println("HTTP/1.1 404 File Not Found");
+            pw.println("Connection: close");
+            pw.println("\n");
+            String contents = getDocumentContents("/404.html", false);
+            if (contents == null) {
+                contents = getDocumentContents("/404.html", true);
+                if (contents != null) pw.println(contents);
+
+            } else {
+                pw.println(contents);
+            }
         } else {
+            pw.println("HTTP/1.1 200 OK");
+            pw.println("Connection: close");
+            pw.println("\n");
             pw.println(documentContents);
         }
-
-
-
         pw.println();
         pw.println();
         pw.flush();
         pw.close();
     }
 
-    private String getDocumentContents(String path) {
+    private synchronized String getDocumentContents(String path, boolean isDefaultRoot) {
+        BufferedReader bufferedReader = null;
         try {
-            URL resource = Server.class.getResource(path);
-            System.out.println(resource.getPath());
-            StringBuilder sb = new StringBuilder();
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(resource.getFile().replace("%20", " ")));
-            String s;
-            while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s).append("\r\n");
+            if (path.equalsIgnoreCase("/")) {
+                path = "/index.html";
             }
-            return sb.toString();
+            File file = new File(((isDefaultRoot) ? defaultWebroot:webroot) + path);
+            if (file.exists()) {
+                StringBuilder sb = new StringBuilder();
+                bufferedReader = new BufferedReader(new FileReader(file));
+                String s;
+                while ((s = bufferedReader.readLine()) != null) {
+                    sb.append(s).append("\r\n");
+                }
+                System.out.println("found - searched for: " + file.getAbsolutePath());
+                return sb.toString();
+            } else {
+                System.out.println("not found - searched for: " + file.getAbsolutePath());
+                return null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        } finally {
+            if (bufferedReader != null) {
+                try {
+                    bufferedReader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

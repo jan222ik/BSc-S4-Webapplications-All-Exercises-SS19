@@ -19,27 +19,48 @@ public class ClientRequest {
         messageBody = new StringBuffer();
     }
 
-    public static ClientRequest parseRequest(BufferedReader request) throws IOException, HttpFormatException {
+    public static ClientRequest parseRequest(BufferedReader request, long timeoutAfter) throws IOException {
         ClientRequest clientRequest = new ClientRequest();
-        String input = request.readLine();
-        StringTokenizer parse = new StringTokenizer(input);
-        clientRequest.method = parse.nextToken().toUpperCase();
-        clientRequest.pathRequest = parse.nextToken().toLowerCase();
-
-
-            String line = request.readLine();
-            while (line.length() > 0) {
-                clientRequest.appendHeaderParameter(line);
-                line = request.readLine();
-            }
-            String bodyLine;
-        if (!clientRequest.method.equalsIgnoreCase("get")) {
-            while ((bodyLine = request.readLine()) != null) {
-                clientRequest.appendMessageBody(bodyLine);
+        int timeoutCount = 0;
+        while (!request.ready()) {
+            timeoutCount += 500;
+            if (timeoutCount > timeoutAfter) break;
+            try {
+                System.out.println("Sleep [" + (timeoutCount-500) + "/" + timeoutAfter + "]");
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
+        if (request.ready()) {
+            String input = request.readLine();
+            if (input != null) {
+                System.out.println(input);
+                StringTokenizer parse = new StringTokenizer(input);
+                clientRequest.method = parse.nextToken().toUpperCase();
+                clientRequest.pathRequest = parse.nextToken().toLowerCase();
 
-        return clientRequest;
+
+                String line = request.readLine();
+                while (line.length() > 0) {
+                    clientRequest.appendHeaderParameter(line);
+                    line = request.readLine();
+                }
+                String bodyLine;
+                if (!clientRequest.method.equalsIgnoreCase("get")) {
+                    while ((bodyLine = request.readLine()) != null) {
+                        clientRequest.appendMessageBody(bodyLine);
+                    }
+                }
+            } else {
+                System.err.println("Empty input");
+                clientRequest.method = "GET";
+                clientRequest.pathRequest = "/notAPath.d";
+            }
+            return clientRequest;
+        }
+        System.err.println("Stream could not be read.");
+        return null;
     }
 
     private void appendMessageBody(String bodyLine) {
@@ -47,12 +68,10 @@ public class ClientRequest {
         messageBody.append(bodyLine).append("\r\n");
     }
 
-    private void appendHeaderParameter(String header) throws HttpFormatException {
+    private void appendHeaderParameter(String header) {
         int index = header.indexOf(':');
         if (index > 0) {
             requestHeaders.put(header.substring(0,index + 1),header.substring(index + 1));
-        } else {
-            throw new HttpFormatException("Invalid line in header");
         }
     }
 

@@ -1,0 +1,26 @@
+body {
+    background-color: #424242;
+    font-family: "Times New Roman", Times, serif;
+    color: #FFF;
+}
+
+
+ul {
+
+}
+
+a {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    text-decoration: none;
+    appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    -moz-border-radius: 0;
+}
+
+
+
+a:hover {
+    text-decoration: none;
+}
