@@ -1,0 +1,8 @@
+Janik Mayr am 13.03.2019
+Getestet mit:
+    Chrome Windows(V73.0.3683.75) - alles wie gewollt dargestellt.
+    Chrome Android(V73.0.3683.75) - Layout nicht reaktiv genug für mobile Endgeräte mit kleinem Bildschirm.
+    Edge(V42.17134.1.0)/IE(V15.*) - CSS Version 4 Var feature grayscale funktioniert nicht.
+    IE(V13.*) - CSS Vars werden von IE nicht unterstützt.
+"Debuggen" von @Media print stylesheets problematisch.
+
