@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Abteilung Lichtgewehr">
+    <meta name="description" content="Abteilung Luftpistole">
     <meta name="author" content="Janik Mayr">
     <meta name="rating" content="safe for kids">
     <meta name="reply-to" content="admin@host.com">
@@ -17,7 +17,7 @@
                     82269,Verein"
     >
 
-    <title>Freischütz Geltendorf - Lichtgewehr</title>
+    <title>Freischütz Geltendorf - Luftpistole</title>
 
     <link rel="stylesheet" type="text/css" href="style.css?v=4.0">
     <link rel="stylesheet" type="text/css" href="webVars.css?v=4.0">
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!--script src="js/scripts.js"></script-->
+    <script src="member.js"></script>
 </head>
 
 <body>
@@ -53,11 +53,41 @@
 <div id="content">
     <header>
         <h1>
-            Abteilung Lichtgewehr
+            Migliederportal
         </h1>
     </header>
     <main>
-        <h3>Nicht Implementiert !!!</h3>
+        <form id="usrform">
+            <label>
+                Vorname: <input type="text" name="firstname" id="fname"><br>
+                Nachname: <input type="text" name="lastname" id="lname"><br>
+                Addresse: <input type="text" name="address" id="address"><br>
+                Geschlecht:<br>
+                <span class="tab-indent">
+                    <input type="radio" name="gender" value="männlich"> Male<br>
+                    <input type="radio" name="gender" value="weiblich"> Female<br>
+                    <input type="radio" name="gender" value="anders" checked> Other<br>
+                </span>
+                Username: <input type="text" name="username" id="username"><br>
+                Password: <input type="password" name="password" id="password"><br>
+                Password wiederholen: <input type="password" name="passwordRepeat" id="passwordRepeat"><br>
+                Land:<br>
+                <select>
+                    <option value="austria">Österreich</option>
+                    <option value="switzerland">Schweiz</option>
+                    <option value="germany">Deutschland</option>
+                    <option value="other">Anderes</option>
+                </select><br>
+                Berechtigung:<br>
+                <span class="tab-indent">
+                    <input type="checkbox" name="berechtigung" value="docent"> Dozent<br>
+                    <input type="checkbox" name="berechtigung" value="student"> Student<br>
+                    <input type="checkbox" name="berechtigung" value="admin"> Admin<br/>
+                    E-Mail: <input type="email" name="email"><br>
+                </span>
+                <input type="submit" onsubmit="submitCheck()">
+            </label>
+        </form>
     </main>
 </div>
 <footer>
