@@ -57,20 +57,20 @@
         </h1>
     </header>
     <main>
-        <form id="usrform">
+        <!--form id="usrform"-->
             <label>
-                Vorname: <input type="text" name="firstname" id="fname"><br>
-                Nachname: <input type="text" name="lastname" id="lname"><br>
-                Addresse: <input type="text" name="address" id="address"><br>
+                Vorname:* <input type="text" name="firstname" id="fname" ><br>
+                Nachname:* <input type="text" name="lastname" id="lname"><br>
+                Addresse:* <input type="text" name="address" id="address"><br>
                 Geschlecht:<br>
                 <span class="tab-indent">
                     <input type="radio" name="gender" value="männlich"> Male<br>
                     <input type="radio" name="gender" value="weiblich"> Female<br>
                     <input type="radio" name="gender" value="anders" checked> Other<br>
                 </span>
-                Username: <input type="text" name="username" id="username"><br>
-                Password: <input type="password" name="password" id="password"><br>
-                Password wiederholen: <input type="password" name="passwordRepeat" id="passwordRepeat"><br>
+                Username:* <input type="text" name="username" id="username"><br>
+                Password:* <input type="password" name="password" id="password" onkeyup="checkPassword()"><br>
+                Password wiederholen:* <input type="password" name="passwordRepeat" id="passwordRepeat" onkeyup="checkPasswordRepeat()"><br>
                 Land:<br>
                 <select>
                     <option value="austria">Österreich</option>
@@ -78,16 +78,16 @@
                     <option value="germany">Deutschland</option>
                     <option value="other">Anderes</option>
                 </select><br>
-                Berechtigung:<br>
+                Berechtigung:*<br>
                 <span class="tab-indent">
                     <input type="checkbox" name="berechtigung" value="docent"> Dozent<br>
                     <input type="checkbox" name="berechtigung" value="student"> Student<br>
                     <input type="checkbox" name="berechtigung" value="admin"> Admin<br/>
-                    E-Mail: <input type="email" name="email"><br>
                 </span>
-                <input type="submit" onsubmit="submitCheck()">
+                E-Mail:* <input type="email" name="email"><br>
+                <button type="button" onclick="submitCheck()">Send</button>
             </label>
-        </form>
+        <!--/form-->
     </main>
 </div>
 <footer>
