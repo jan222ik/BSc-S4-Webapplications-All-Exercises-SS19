@@ -1,0 +1,35 @@
+Berücksichtigte Tags:
+
+<html lang="de">
+    Gibt die Sprache des Inhalts an.
+<meta charset="utf-8">
+    Gibt das encoding der Seite an.
+<meta name="description" content="Abteilung Luftpistole">
+    Bestimmt den vorstellungstext auf Google.
+<meta name="rating" content="safe for kids">
+    Benötig damit eine website angezeigt wird wenn suchmaschine im save for kids modus ist.
+<meta name =”robots” content=”index”> & <meta name =”robots” content=”follow”>
+    Benötigt für crawler.
+<meta name="keywords"
+          content="Schützenverein,Freischütz,Geltendorf,
+                    Luftgewehr,Luftpistole,Lichtgewehr,
+                    Jugend,Gemeinschaft,1929,
+                    82269,Verein"
+    >
+    Keywords sind die Wörter über die die Website gefunden werden soll.
+<title>Freischütz Geltendorf - Member</title>
+    Der title der in der Suchmaschine angezeigt wird
+<h1>
+    Google parsed bei beliebten Websiten/Werbepartnern h1 Überschriften.
+
+Wie wird eine Website gefunden:
+    Entweder die Website wird über einen WebCrawler gefunden oder der Ersteller bewirbt seine Seite bei einer Suchmaschine.
+
+Wie kann ich das erfassen verhinden:
+    <meta name = "robots" content ="noindex, nofollow">
+    oder http Header robots Parameter auf noindex, nofollow stellen.
+
+Wie wird bewertet:
+    http://pi.math.cornell.edu/~mec/Winter2009/RalucaRemus/Lecture3/lecture3.html
+    https über http
+

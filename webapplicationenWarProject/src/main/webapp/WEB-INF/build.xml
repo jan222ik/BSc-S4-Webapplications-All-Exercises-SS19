@@ -5,13 +5,13 @@
         "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
 
 <web-app>
+    <display-name>WebSem05</display-name>
     <servlet>
-        <servlet-name>GuestbookSaveServlet</servlet-name>
-        <servlet-class>GuestbookSaveServlet</servlet-class>
+        <servlet-name>GuestBookSaveServlet</servlet-name>
+        <servlet-class>GuestBookSaveServlet</servlet-class>
     </servlet>
-
     <servlet-mapping>
-        <servlet-name>GuestbookSaveServlet</servlet-name>
-        <url-pattern>/guest.html</url-pattern>
+        <servlet-name>GuestBookSaveServlet</servlet-name>
+        <url-pattern>/guest</url-pattern>
     </servlet-mapping>
 </web-app>
