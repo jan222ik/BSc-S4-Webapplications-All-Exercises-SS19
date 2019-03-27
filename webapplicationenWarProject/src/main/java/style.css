@@ -1,0 +1,99 @@
+body {
+    background-color: var(--content-bg-color);
+    margin: 0;
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    color: var(--font-color);
+}
+
+#content {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 15%;
+    bottom: 0;
+    left: 15%;
+    max-width: 70%;
+}
+
+#content {
+    background-color: var(--content-bg-color);
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: var(--nav-bg-color);
+    max-width: 15%;
+}
+
+footer > a {
+    padding-left:5em;
+    padding-bottom: 5px;
+}
+
+nav > img {
+    width: 138px;
+    height: auto;
+}
+
+main > img {
+    width: 100%;
+    max-width: inherit;
+    height: auto;
+}
+
+nav > h3 {
+    padding-right: 10px;
+    padding-left: 1em;
+}
+
+nav > ul {
+    padding-left: 30px;
+    padding-right: 10px;
+}
+
+a {
+    -webkit-appearance: none;
+    -webkit-border-radius: 0;
+    text-decoration: none;
+    color: inherit;
+    -moz-appearance: none;
+    border-radius: 0;
+    -moz-border-radius: 0;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+main > article > p {
+    padding-left: 2em;
+}
+
+table {
+    padding-left: 2em;
+}
+
+table > thead > tr > th {
+    padding-right: 5px;
+    text-align: left;
+}
+
+table > tbody > tr > td {
+    padding-right: 10px;
+}
+
+footer {
+    padding-left: 15%;
+    background-color: var(--footer-bg-color);
+    position: fixed;
+    padding-top: 5px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    max-width: 100%;
+    margin: auto;
+}
