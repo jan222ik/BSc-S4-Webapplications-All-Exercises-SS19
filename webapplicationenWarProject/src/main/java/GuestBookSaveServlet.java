@@ -80,10 +80,10 @@ public class GuestBookSaveServlet extends HttpServlet {
         out.print("<body>\n");
         out.print("<nav>\n");
         out.print("    <img src=\"https://freischuetz-geltendorf.de/images/hader.jpg\" alt=\"vereinLogo\">\n");
-        out.print("    <h3 id=\"menuHeader\"><a href=\"index.html\">Menü:</a></h3>\n");
+        out.print("    <h3 id=\"menuHeader\"><a href=\"start.html\">Menü:</a></h3>\n");
         out.print("    <ul>\n");
         out.print("        <li>\n");
-        out.print("            <a href=\"index.html\">Willkommen</a>\n");
+        out.print("            <a href=\"start.html\">Willkommen</a>\n");
         out.print("        </li>\n");
         out.print("        <li>\n");
         out.print("            <a href=\"luftgewehr.html\">Luftgewehr</a>\n");
