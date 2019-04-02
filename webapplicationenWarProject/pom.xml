@@ -18,7 +18,7 @@
         <repository>
             <id>internal.repo</id>
             <name>Internal repo</name>
-            <url>file:///out/warProject</url>
+            <url>file://${project.basedir}/out/artifacts/warProject</url>
         </repository>
     </distributionManagement>
     <build>
