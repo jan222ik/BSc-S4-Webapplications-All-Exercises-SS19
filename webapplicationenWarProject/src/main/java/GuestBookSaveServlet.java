@@ -1,5 +1,6 @@
 import org.jetbrains.annotations.NotNull;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -7,11 +8,14 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Vector;
 
 /**
  * @author Janik Mayr on 27.03.2019
  */
+@WebServlet(
+        name = "GuestBookSaveServlet",
+        urlPatterns = {"/guest"}
+)
 public class GuestBookSaveServlet extends HttpServlet {
     private long lastModified = 0;
     private HSQLDBEmbeddedServer hsqldbEmbeddedServer;
@@ -76,6 +80,7 @@ public class GuestBookSaveServlet extends HttpServlet {
         out.print("    <link rel=\"stylesheet\" type=\"text/css\" href=\"printVars.css?v=4.0\" media=\"print\" />\n");
         out.print("    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto\">\n");
         out.print("    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\n");
+        out.print("<script>document.cookie = \"last=\" + window.location.href + \"; expires=\" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + \";\";</script>");
         out.print("\n\n");
         out.print("<body>\n");
         out.print("<nav>\n");

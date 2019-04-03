@@ -5,20 +5,5 @@
         "http://java.sun.com/j2ee/dtds/web-app_2_2.dtd">
 
 <web-app>
-    <servlet>
-        <servlet-name>GuestBookSaveServlet</servlet-name>
-        <servlet-class>GuestBookSaveServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>IndexRedirectServlet</servlet-name>
-        <servlet-class>IndexRedirectServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>GuestBookSaveServlet</servlet-name>
-        <url-pattern>/guest</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>IndexRedirectServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
+
 </web-app>

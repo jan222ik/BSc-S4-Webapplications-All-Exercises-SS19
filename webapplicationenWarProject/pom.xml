@@ -33,7 +33,7 @@
                 <configuration>
                     <!--warSourceDirectory>src/main/webapp</warSourceDirectory-->
                     <webXml>src\main\webapp\WEB-INF\build.xml</webXml>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <!--failOnMissingWebXml>false</failOnMissingWebXml-->
                 </configuration>
             </plugin>
             <plugin>

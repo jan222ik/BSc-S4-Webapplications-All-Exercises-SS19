@@ -1,0 +1,12 @@
+Name: Janik Mayr
+Aufgabe 11:
+	Pfad: app/JSPTableForm.html
+Aufgabe 12:
+	Deployment:
+		mit Tomcat (vgl. letzte Abgabe).
+	Änderungen:
+		Generierung eines Cookies pro Seite.
+			Script:  <script>
+        				document.cookie = "last=" + window.location.href + "; expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + ";";
+    				</script>
+    Pfad: / und /redirectMe
