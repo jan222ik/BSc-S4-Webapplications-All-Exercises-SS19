@@ -10,6 +10,7 @@
     <artifactId>webapplicationenWarProject</artifactId>
     <modelVersion>4.0.0</modelVersion>
     <packaging>war</packaging>
+    <name>app</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,6 +23,7 @@
         </repository>
     </distributionManagement>
     <build>
+        <finalName>app</finalName>
         <sourceDirectory>src/main/java</sourceDirectory>
         <plugins>
             <plugin>
