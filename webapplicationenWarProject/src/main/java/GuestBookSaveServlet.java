@@ -22,8 +22,7 @@ public class GuestBookSaveServlet extends HttpServlet {
 
     @Override
     public void init() {
-        hsqldbEmbeddedServer = new HSQLDBEmbeddedServer();
-        hsqldbEmbeddedServer.start();
+        hsqldbEmbeddedServer = HSQLDBEmbeddedServer.getInstance();
     }
 
     @Override
@@ -80,29 +79,14 @@ public class GuestBookSaveServlet extends HttpServlet {
         out.print("    <link rel=\"stylesheet\" type=\"text/css\" href=\"printVars.css?v=4.0\" media=\"print\" />\n");
         out.print("    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto\">\n");
         out.print("    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\n");
-        out.print("<script>document.cookie = \"last=\" + window.location.href + \"; expires=\" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + \";\";</script>");
+        out.print("    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\n");
+        out.print("<script>document.cookie = \"last=\" + window.location.href + \"; expires=\" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + \";\";$(document).ready(function () {\n" +
+                "            $('#nav').load(\"nav.html\");\n" +
+                "            $('#footer').load(\"footer.html\");\n" +
+                "        });</script>");
         out.print("\n\n");
         out.print("<body>\n");
-        out.print("<nav>\n");
-        out.print("    <img src=\"https://freischuetz-geltendorf.de/images/hader.jpg\" alt=\"vereinLogo\">\n");
-        out.print("    <h3 id=\"menuHeader\"><a href=\"start.html\">Menü:</a></h3>\n");
-        out.print("    <ul>\n");
-        out.print("        <li>\n");
-        out.print("            <a href=\"start.html\">Willkommen</a>\n");
-        out.print("        </li>\n");
-        out.print("        <li>\n");
-        out.print("            <a href=\"luftgewehr.html\">Luftgewehr</a>\n");
-        out.print("        </li>\n");
-        out.print("        <li>\n");
-        out.print("            <a href=\"luftpistole.html\">Luftpistole</a>\n");
-        out.print("        </li>\n");
-        out.print("        <li>\n");
-        out.print("            <a href=\"lichtgewehr.html\">Lichtgewehr</a>\n");
-        out.print("        </li>\n");
-        out.print("        <li>\n");
-        out.print("            <a href=\"member.html\">Mitglieder</a>\n");
-        out.print("        </li>\n");
-        out.print("    </ul>\n");
+        out.print("<nav id=\"nav\">\n");
         out.print("</nav>\n");
         out.print("<div id=\"content\">\n");
         out.print("<header>\n");
@@ -151,7 +135,7 @@ public class GuestBookSaveServlet extends HttpServlet {
     }
 
     private void appendAfterMessages(@NotNull PrintWriter out) {
-        out.println("</body></html>");
+        out.println("</main></div><footer id=\"footer\"></footer></body></html>");
     }
 
     private void handleForm(@NotNull HttpServletRequest request) {
