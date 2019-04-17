@@ -2,14 +2,6 @@
   Created by IntelliJ IDEA.
   User: jan22
   Date: 15.04.2019
-  Time: 18:06
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: jan22
-  Date: 15.04.2019
   Time: 17:15
   To change this template use File | Settings | File Templates.
 --%>
@@ -41,10 +33,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         //document.cookie = "last=" + window.location.href + "; expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + ";";
         $(document).ready(function(){
-            $('#nav').load("nav.html");
+            $('#nav').load("nav.jsp");
             $('#footer').load("footer.html");
         });
     </script>

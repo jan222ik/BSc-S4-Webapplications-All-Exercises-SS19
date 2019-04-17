@@ -36,7 +36,7 @@
     <script>
         document.cookie = "last=" + window.location.href + "; expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + ";";
         $(document).ready(function(){
-            $('#nav').load("nav.html");
+            $('#nav').load("nav.jsp");
             $('#footer').load("footer.html");
         });
     </script>

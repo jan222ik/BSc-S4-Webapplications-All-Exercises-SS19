@@ -37,7 +37,7 @@
     <script>
         document.cookie = "last=" + window.location.href + "; expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + ";";
         $(document).ready(function () {
-            $('#nav').load("nav.html");
+            $('#nav').load("nav.jsp");
             $('#footer').load("footer.html");
         });
     </script>
@@ -52,14 +52,14 @@
         </h1>
     </header>
     <main>
-        <form action="con?dispatchTo=logincontroller">
+        <form action="con" method="get">
 
             Please enter your username
             <input type="text" name="usernameParam"/><br>
 
             Please enter your password
-            <input type="text" name="passwordParam"/>
-            <input type="hidden" name="con?dispatchTo=logincontrollter"/>
+            <input type="password" name="passwordParam"/>
+            <input type="hidden" name="dispatchTo" value="loginCheck">
 
             <input type="submit" value="submit">
 
