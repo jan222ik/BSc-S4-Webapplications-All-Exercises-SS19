@@ -1,16 +1,21 @@
-<%--
+<%@ page import="clazzes.ControllerServlet" %>
+<%@ page import="clazzes.HistoryContainer" %>
+<%@ page import="clazzes.HistoryEntry" %>
+<%@ page import="static clazzes.STATIC_NAMES.HISTORY_CONTAINER_ATTRIBUTE_STRING" %><%--
   Created by IntelliJ IDEA.
   User: jan22
-  Date: 16.04.2019
-  Time: 22:36
+  Date: 17.04.2019
+  Time: 18:57
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
+
 <html lang="de">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <meta name="description" content="Verein Übersicht">
+    <meta name="description" content="Login fehlgeschlagen">
     <meta name="author" content="Janik Mayr">
     <meta name="rating" content="safe for kids">
     <meta name="reply-to" content="admin@host.com">
@@ -18,12 +23,12 @@
     <meta http-equiv="refresh" content="43200">
     <meta name="keywords"
           content="Schützenverein,Freischütz,Geltendorf,
-                        Luftgewehr,Luftpistole,Lichtgewehr,
-                        Jugend,Gemeinschaft,1929,
-                        82269,Verein"
+                    Luftgewehr,Luftpistole,Lichtgewehr,
+                    Jugend,Gemeinschaft,1929,
+                    82269,Verein"
     >
 
-    <title>Freischütz Geltendorf</title>
+    <title>Freischütz Geltendorf - History</title>
 
     <link rel="stylesheet" type="text/css" href="style.css?v=4.0">
     <link rel="stylesheet" type="text/css" href="webVars.css?v=4.0">
@@ -34,44 +39,37 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         document.cookie = "last=" + window.location.href + "; expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + ";";
-        $(document).ready(function () {
+        $(document).ready(function(){
             $('#nav').load("nav.jsp");
             $('#footer').load("footer.html");
         });
     </script>
 </head>
+
 <body>
 <nav id="nav"></nav>
 <div id="content">
     <header>
         <h1>
-            Willokmmen beim Freischütz Geltendorf
+            History
         </h1>
     </header>
     <main>
-        <h3>Über uns</h3>
-        <article>
-            <h4>Unsere Sportstätte</h4>
-            <img src="schuetzenheim.jpg" alt="schützenheim">
-            <p id="address">
-                Am Graben 14<br>
-                82269 Geltendorf<br>
-                Deutschland<br>
-            </p>
-        </article>
-        <article>
-            <h4>Daten über uns:</h4>
-            <ul>
-                <li>
-                    122 Mitglieder
-                </li>
-                <li>
-                    große Jugendabteilung
-                </li>
-            </ul>
-        </article>
+        <%
+            HistoryContainer container = (HistoryContainer) request.getSession().getAttribute(HISTORY_CONTAINER_ATTRIBUTE_STRING);
+            int i = 0;
+            if (container != null) {
+                for (HistoryEntry e : container.getEntries()) {
+                    out.println("<p>[" + i + "]" + e.toDisplayString() + "</p>");
+                    i++;
+                }
+            } else {
+                out.println("Keine Historie");
+            }
+        %>
     </main>
 </div>
-<footer id="footer"></footer>
+<footer id="footer">
+</footer>
 </body>
 </html>

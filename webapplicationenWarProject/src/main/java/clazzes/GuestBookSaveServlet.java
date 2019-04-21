@@ -1,6 +1,7 @@
+package clazzes;
+
 import org.jetbrains.annotations.NotNull;
 
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,23 +13,13 @@ import java.sql.SQLException;
 /**
  * @author Janik Mayr on 27.03.2019
  */
-@WebServlet(
-        name = "GuestBookSaveServlet",
-        urlPatterns = {"/guest"}
-)
+//@WebServlet(name = "clazzes.GuestBookSaveServlet", urlPatterns = {"/guest"})
 public class GuestBookSaveServlet extends HttpServlet {
-    private long lastModified = 0;
-    private HSQLDBEmbeddedServer hsqldbEmbeddedServer;
-
-    @Override
-    public void init() {
-        hsqldbEmbeddedServer = HSQLDBEmbeddedServer.getInstance();
-    }
 
     @Override
     public void destroy() {
         try {
-            hsqldbEmbeddedServer.stop();
+            HSQLDBEmbeddedServer.getInstance().stop();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -36,9 +27,13 @@ public class GuestBookSaveServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        handleGet(request, response);
+    }
+
+    public static void handleGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String queryString = request.getQueryString();
         if (queryString != null && queryString.equalsIgnoreCase("database=reset")) {
-            hsqldbEmbeddedServer.reset();
+            HSQLDBEmbeddedServer.getInstance().reset();
         }
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
@@ -51,11 +46,15 @@ public class GuestBookSaveServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-        handleForm(req);
-        doGet(req, res);
+        handlePost(req, res);
     }
 
-    private void appendBeforeForm(@NotNull PrintWriter out) {
+    public static void handlePost(HttpServletRequest req, HttpServletResponse res) throws IOException {
+        handleForm(req);
+        handleGet(req, res);
+    }
+
+    private static void appendBeforeForm(@NotNull PrintWriter out) {
         out.print("<head>\n");
         out.print("    <meta charset=\"utf-8\">\n");
         out.print("    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=yes\">\n");
@@ -80,10 +79,10 @@ public class GuestBookSaveServlet extends HttpServlet {
         out.print("    <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css?family=Roboto\">\n");
         out.print("    <link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css\">\n");
         out.print("    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>\n");
-        out.print("<script>document.cookie = \"last=\" + window.location.href + \"; expires=\" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + \";\";$(document).ready(function () {\n" +
-                "            $('#nav').load(\"nav.html\");\n" +
-                "            $('#footer').load(\"footer.html\");\n" +
-                "        });</script>");
+        out.print("<script>document.cookie = \"last=\" + window.location.href + \"; expires=\" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + \";\";$(document).ready(function () {\n"
+                + "            $('#nav').load(\"nav.jsp\");\n"
+                + "            $('#footer').load(\"footer.html\");\n"
+                + "        });</script>");
         out.print("\n\n");
         out.print("<body>\n");
         out.print("<nav id=\"nav\">\n");
@@ -97,8 +96,8 @@ public class GuestBookSaveServlet extends HttpServlet {
         out.print("<main>\n");
     }
 
-    private void appendForm(@NotNull PrintWriter out) {
-        out.println("<form method=post>");  // posts to itself
+    private static void appendForm(@NotNull PrintWriter out) {
+        out.println("<form method=post>");
         out.println("<b>Hinterlasse einen Kommentar</b><br>");
         out.println("Name: <input type=text name=name><br>");
         out.println("E-Mail: <input type=text name=email><br>");
@@ -108,17 +107,28 @@ public class GuestBookSaveServlet extends HttpServlet {
         out.println("<hr>");
     }
 
-    private void printMessages(PrintWriter out) {
+    private static void printMessages(PrintWriter out) {
         try {
             System.out.println("Get Data From DB");
-            ResultSet resultSet = hsqldbEmbeddedServer.getConnection().prepareStatement("SELECT * FROM GuestEntry;"
-            ).executeQuery();
+            ResultSet resultSet = HSQLDBEmbeddedServer
+                    .getInstance()
+                    .getConnection()
+                    .prepareStatement("SELECT * FROM GuestEntry;")
+                    .executeQuery();
             while (resultSet.next()) {
                 System.out.println("Element discovered");
-                SiteEntry entry = new SiteEntry(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3));
+                SiteEntry entry = new SiteEntry(
+                        resultSet.getString(1),
+                        resultSet.getString(2),
+                        resultSet.getString(3)
+                );
                 System.out.println(entry);
-                if ("".equals(entry.name)) entry.name = "Unbekannter Nutzer";
-                if ("".equals(entry.email)) entry.email = "Unbekannte Email";
+                if ("".equals(entry.name)) {
+                    entry.name = "Unbekannter Nutzer";
+                }
+                if ("".equals(entry.email)) {
+                    entry.email = "Unbekannte Email";
+                }
                 if (!"".equals(entry.comment)) {
                     out.println("<DL>");
                     out.println("<DT><B>" + entry.name + "</B> (" + entry.email + ") sagt");
@@ -134,11 +144,11 @@ public class GuestBookSaveServlet extends HttpServlet {
         } //idk why it should wait but it does have to
     }
 
-    private void appendAfterMessages(@NotNull PrintWriter out) {
+    private static void appendAfterMessages(@NotNull PrintWriter out) {
         out.println("</main></div><footer id=\"footer\"></footer></body></html>");
     }
 
-    private void handleForm(@NotNull HttpServletRequest request) {
+    private static void handleForm(@NotNull HttpServletRequest request) {
         SiteEntry entry = new SiteEntry();
 
         entry.name = request.getParameter("name");
@@ -146,20 +156,20 @@ public class GuestBookSaveServlet extends HttpServlet {
         entry.comment = request.getParameter("comment");
         System.out.println("Saveing " + entry);
         try {
-            hsqldbEmbeddedServer.getConnection().prepareStatement("INSERT INTO GuestEntry(name, email, comment) VALUES ('"
-                    + entry.name + "','"
-                    + entry.email + "','"
-                    + entry.comment + "');"
-            ).execute();
+            HSQLDBEmbeddedServer
+                    .getInstance()
+                    .getConnection()
+                    .prepareStatement(
+                            "INSERT INTO GuestEntry(name, email, comment) VALUES ('"
+                                    + entry.name + "','"
+                                    + entry.email + "','"
+                                    + entry.comment + "');"
+                    ).execute();
         } catch (SQLException ignored) {
         }
-        lastModified = System.currentTimeMillis();
     }
 
-    @Override
-    public long getLastModified(HttpServletRequest request) {
-        return lastModified;
-    }
+
 }
 
 @SuppressWarnings("WeakerAccess")
@@ -180,10 +190,10 @@ class SiteEntry {
 
     @Override
     public String toString() {
-        return "SiteEntry{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", comment='" + comment + '\'' +
-                '}';
+        return "SiteEntry{"
+                + "name='" + name
+                + "', email='" + email
+                + "', comment='" + comment
+                + "'}";
     }
 }

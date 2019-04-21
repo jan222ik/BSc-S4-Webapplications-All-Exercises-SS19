@@ -1,3 +1,5 @@
+package clazzes;
+
 import org.hsqldb.Server;
 
 import java.sql.Connection;
@@ -36,9 +38,8 @@ public class HSQLDBEmbeddedServer {
             connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/xdb", "sa", "");
             //CREATE Table
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS GuestEntry (name VARCHAR(50),email VARCHAR(50), comment VARCHAR(144));").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS User (personId BIGINT, username VARCHAR(50), password VARCHAR(50), PRIMARY KEY (personId));").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS UsersHistory (personId BIGINT, site VARCHAR(50), dayTime DATETIME, FOREIGN KEY (personId) REFERENCES User(personId))").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS UserData (personId BIGINT, fname VARCHAR(50), lname VARCHAR(50), access INT, FOREIGN KEY (personId) REFERENCES  User(personId))").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS Users (personId BIGINT, username VARCHAR(50), password VARCHAR(50), PRIMARY KEY (personId));").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS UserData (personId BIGINT, fname VARCHAR(50), lname VARCHAR(50), access VARCHAR(50), FOREIGN KEY (personId) REFERENCES  Users(personId))").execute();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -60,13 +61,11 @@ public class HSQLDBEmbeddedServer {
     public void reset() {
         try {
             connection.prepareStatement("DROP TABLE IF EXISTS GuestEntry").execute();
-            connection.prepareStatement("DROP TABLE IF EXISTS User").execute();
-            connection.prepareStatement("DROP TABLE IF EXISTS UsersHistory").execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS Users").execute();
             connection.prepareStatement("DROP TABLE IF EXISTS UserData").execute();
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS GuestEntry (name VARCHAR(50),email VARCHAR(50), comment VARCHAR(144));").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS User (personId BIGINT, username VARCHAR(50), password VARCHAR(50), PRIMARY KEY (personId));").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS UsersHistory (personId BIGINT, site VARCHAR(50), dayTime DATETIME, FOREIGN KEY (personId) REFERENCES User(personId))").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS UserData (personId BIGINT, fname VARCHAR(50), lname VARCHAR(50), access INT, FOREIGN KEY (personId) REFERENCES  User(personId))").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS Users (personId BIGINT, username VARCHAR(50), password VARCHAR(50), PRIMARY KEY (personId));").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS UserData (personId BIGINT, fname VARCHAR(50), lname VARCHAR(50), access INT, FOREIGN KEY (personId) REFERENCES  Users(personId))").execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

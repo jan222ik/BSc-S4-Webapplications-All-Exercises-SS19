@@ -1,4 +1,7 @@
-<%--
+<%@ page import="static clazzes.STATIC_NAMES.SignUpForm.SIGN_UP_FIRST_NAME_PARAMETER_STRING" %>
+<%@ page import="static clazzes.STATIC_NAMES.SignUpForm.SIGN_UP_LAST_NAME_PARAMETER_STRING" %>
+<%@ page import="static clazzes.STATIC_NAMES.SignUpForm.*" %>
+<%@ page import="static clazzes.STATIC_NAMES.DISPATCH_TO_PARAMETER_STRING" %><%--
   Created by IntelliJ IDEA.
   User: jan22
   Date: 16.04.2019
@@ -56,20 +59,20 @@
         </h1>
     </header>
     <main>
-        <form id="usrform" action="mailto:jan.spam.22@gmail.com" method="post" enctype="text/plain" accept-charset="UTF-8">
+        <form id="usrform" action="con" method="get" enctype="text/plain" accept-charset="UTF-8">
             <label>
-                Vorname: <input type="text" name="firstname" id="fname"><br>
-                Nachname: <input type="text" name="lastname" id="lname"><br>
+                Vorname: <input type="text" name="<%=SIGN_UP_FIRST_NAME_PARAMETER_STRING%>" id="fname"><br>
+                Nachname: <input type="text" name="<%=SIGN_UP_LAST_NAME_PARAMETER_STRING%>" id="lname"><br>
                 Addresse: <br>
                 <textarea name="address" id="address" rows="3"></textarea><br>
                 Geschlecht:<br>
                 <span class="tab-indent">
                         <input type="radio" name="gender" value="männlich" id="male"> Male<br>
                         <input type="radio" name="gender" value="weiblich" id="female"> Female<br>
-                        <input type="radio" name="gender" value="anders" id="other"> Other<br>
+                        <input type="radio" name="gender" value="anders" id="other" checked> Other<br>
                     </span>
-                Username: <input type="text" name="username" id="username"><br>
-                Password: <input type="password" name="password" id="password"><br>
+                Username: <input type="text" name="<%=SIGN_UP_USERNAME_PARAMETER_STRING%>" id="username"><br>
+                Password: <input type="password" name="<%=SIGN_UP_PASSWORD_PARAMETER_STRING%>" id="password"><br>
                 Password wiederholen: <input type="password" name="passwordRepeat" id="passwordRepeat"><br>
                 Land:<br>
                 <select>
@@ -86,11 +89,12 @@
                 </select><br>
                 Berechtigung:<br>
                 <span class="tab-indent">
-                        <input type="checkbox" name="access" value="shooter" id="shooter">Schütze<br>
-                        <input type="checkbox" name="access" value="leader" id="leader">Abteilungsleiter<br>
-                        <input type="checkbox" name="access" value="admin" id="admin">Admin<br/>
+                        <input type="checkbox" name="<%=SIGN_UP_ACCESS_PARAMETER_STRING%>" value="shooter" id="shooter" checked>Schütze<br>
+                        <input type="checkbox" name="<%=SIGN_UP_ACCESS_PARAMETER_STRING%>" value="leader" id="leader">Abteilungsleiter<br>
+                        <input type="checkbox" name="<%=SIGN_UP_ACCESS_PARAMETER_STRING%>" value="admin" id="admin">Admin<br/>
                         E-Mail: <input type="text" name="email" id="email"><br>
                     </span>
+                <input type="hidden" name="<%=DISPATCH_TO_PARAMETER_STRING%>" value="register">
                 <button type="reset">Zurücksetzen</button>
                 <button type="button" onclick="submitCheck()">Absenden</button>
             </label>

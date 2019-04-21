@@ -1,3 +1,5 @@
+package clazzes;
+
 public class UserBean {
     String personId;
     String username;
