@@ -7,7 +7,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"-->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:t="http://java.sun.com/jsf/html">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
     <meta name="description" content="Login fehlgeschlagen"/>
@@ -34,44 +35,69 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script>
         document.cookie = "last=" + window.location.href + "; expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + ";";
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('#nav').load("nav.jsp");
             $('#footer').load("footer.html");
         });
     </script>
 </head>
 <body>
-    <div id="nav">
+<div id="nav">
+</div>
+<div id="content">
+    <div>
+        <h1>
+           Wettkampfteilnahme
+        </h1>
     </div>
-    <div id="content">
-        <div>
-            <h1>
-                Hello World!
-            </h1>
-        </div>
-        <div id="main">
-            <h:form>
-                Name:
-                <h:inputText id="name" size="3" value="#{facesFormBean.name}"/>
-                Mannschaft:
-                <h:selectOneRadio value="#{facesFormBean.discipline}">
-                    <f:selectItem itemValue="Luftgewehr" itemLabel="Luftgewehr" />
-                    <f:selectItem itemValue="Luftpistole" itemLabel="Luftpistole" />
-                </h:selectOneRadio>
+    <div id="main">
+        <h:form>
+            Name:
+            <h:inputText id="name" size="3" value="#{facesFormBean.name}"/>
+            Mannschaft:
+            <h:selectOneRadio value="#{facesFormBean.team}">
+                <f:selectItem itemValue="Luftgewehr 1" itemLabel="Luftgewehr 1"/>
+                <f:selectItem itemValue="Luftpistole 1" itemLabel="Luftpistole 1"/>
+            </h:selectOneRadio>
+            <table>
+                <thead>
+                <tr>
+                    <th style="visibility: hidden">id</th>
+                    <th>#</th>
+                    <th>Datum</th>
+                    <th>Ort</th>
+                    <th>Anwesenheit</th>
+                    <th>Anreise</th>
+                </tr>
+                </thead>
+                <tbody>
                 <ui:repeat value="#{competitionSupplierBean.getLuftgewehr()}" var="var">
-                    Wettkampf #{var.numberInSeason} am #{var.date} in #{var.location}  <br/>
-                    Teilname:
-                    <h:selectOneRadio value="#{facesFormBean.discipline}">
-                        <f:selectItem itemValue="ja" itemLabel="ja" />
-                        <f:selectItem itemValue="nein" itemLabel="nein" />
-                        <!--h:inputText id="anzahlPersonen" size="3" value="#{facesFormBean.name}"/-->
-                    </h:selectOneRadio>
+                    <tr>
+                        <td style="visibility: visible; width: 0">#{var.id}
+                            <t:selectOneRadio value="#{facesFormBean.trCompetitionId}">
+                                <f:selectItem itemValue="#{var.id}" itemLabel="#{var.id}" />
+                            </t:selectOneRadio></td>
+                        <td>#{var.numberInSeason}</td>
+                        <td>#{var.date}</td>
+                        <td>#{var.location}</td>
+                        <td>
+                            <h:selectOneRadio value="#{facesFormBean.participation}">
+                            <f:selectItem itemValue="ja;#{var.id}" itemLabel="ja"/>
+                            <f:selectItem itemValue="nein;#{var.id}" itemLabel="nein"/>
+                            </h:selectOneRadio>
+                        </td>
+                        <td>
+                            <h:selectBooleanCheckbox value="#{facesFormBean.selfDrive}"/>
+                        </td>
+                    </tr>
                 </ui:repeat>
-                <h:commandButton value="Submit" action="#{facesFormBean.submit()}"/>
-            </h:form>
-        </div>
+                </tbody>
+            </table>
+            <h:commandButton value="Submit" action="#{facesFormBean.submit()}"/>
+        </h:form>
     </div>
-    <div id="footer">
-    </div>
+</div>
+<div id="footer">
+</div>
 </body>
 </html>
