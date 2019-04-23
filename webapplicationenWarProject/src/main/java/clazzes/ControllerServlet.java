@@ -63,6 +63,10 @@ public class ControllerServlet extends HttpServlet {
             case HISTORY:
                 forwardTo(Pages.HISTORY, req, resp);
                 break;
+            case WETTKAMPF_TEILNAHME:
+                //resp.sendRedirect(Pages.WETTKAMPF_TEILNAHME.getFileName());
+                forwardTo(Pages.WETTKAMPF_TEILNAHME, req, resp);
+                break;
             default:
                 error404(req, resp);
         }

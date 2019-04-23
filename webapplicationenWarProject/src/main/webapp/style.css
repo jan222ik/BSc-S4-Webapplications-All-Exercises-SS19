@@ -20,7 +20,7 @@ body {
     background-color: var(--content-bg-color);
 }
 
-nav {
+#nav {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -29,13 +29,19 @@ nav {
     max-width: 15%;
 }
 
-footer > a {
+#footer > a {
     padding-left:5em;
     padding-bottom: 5px;
 }
 
-nav > img {
+#nav > img {
     width: 138px;
+    height: auto;
+}
+
+#main > img {
+    width: 100%;
+    max-width: inherit;
     height: auto;
 }
 
@@ -45,12 +51,12 @@ main > img {
     height: auto;
 }
 
-nav > h3 {
+#nav > h3 {
     padding-right: 10px;
     padding-left: 1em;
 }
 
-nav > ul {
+#nav > ul {
     padding-left: 30px;
     padding-right: 10px;
 }
@@ -73,6 +79,10 @@ main > article > p {
     padding-left: 2em;
 }
 
+#main > article > p {
+    padding-left: 2em;
+}
+
 table {
     padding-left: 2em;
 }
@@ -86,7 +96,7 @@ table > tbody > tr > td {
     padding-right: 10px;
 }
 
-footer {
+#footer {
     padding-left: 15%;
     background-color: var(--footer-bg-color);
     position: fixed;

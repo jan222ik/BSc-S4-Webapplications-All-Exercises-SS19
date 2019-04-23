@@ -11,13 +11,13 @@ function submitCheck() {
     }
 
     function isEmpty(node) {
-        return node.value == null || node.value === "";
+        return node.var == null || node.var === "";
     }
 
     function validatePasswords(passwordFirst, passwordRepeat) {
-        if (validatePassword(passwordFirst.value)) {
-            if (validatePassword(passwordRepeat.value)) {
-                if (passwordRepeat.value === passwordFirst.value) {
+        if (validatePassword(passwordFirst.var)) {
+            if (validatePassword(passwordRepeat.var)) {
+                if (passwordRepeat.var === passwordFirst.var) {
                     return true;
                 } else {
                     errorString("passwords are not the same");
@@ -27,7 +27,7 @@ function submitCheck() {
             }
         } else {
             errorString("password does not adheres to the rules");
-            if (!validatePassword(passwordRepeat.value)) {
+            if (!validatePassword(passwordRepeat.var)) {
                 errorString("password repeat does not adheres to the rules");
             }
         }
@@ -77,7 +77,7 @@ function submitCheck() {
 
     validatePasswords(passwordFirst, passwordRepeat);
 
-    if (!validateEmail(email.value)) {
+    if (!validateEmail(email.var)) {
         errorString("email does not adheres to the rules")
     }
 
@@ -99,8 +99,8 @@ function submitCheck() {
 
 function validateUsername(username) {
     const usernamePattern = /^[A-Za-z_]*$/;
-    if (username.value.length >= 4 && username.value.length <= 10) {
-        if (username.value.match(usernamePattern)) {
+    if (username.var.length >= 4 && username.var.length <= 10) {
+        if (username.var.match(usernamePattern)) {
             return true;
         }
     }

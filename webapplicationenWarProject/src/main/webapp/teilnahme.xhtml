@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+    <meta name="description" content="Login fehlgeschlagen"/>
+    <meta name="author" content="Janik Mayr"/>
+    <meta name="rating" content="safe for kids"/>
+    <meta name="reply-to" content="admin@host.com"/>
+    <meta name="distribution" content="global"/>
+    <meta http-equiv="refresh" content="43200"/>
+    <meta name="keywords"
+          content="Schützenverein,Freischütz,Geltendorf,
+                    Luftgewehr,Luftpistole,Lichtgewehr,
+                    Jugend,Gemeinschaft,1929,
+                    82269,Verein"
+    />
+
+
+    <title>Freischütz Geltendorf - JSF</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css?v=4.0"/>
+    <link rel="stylesheet" type="text/css" href="webVars.css?v=4.0"/>
+    <link rel="stylesheet" type="text/css" href="printVars.css?v=4.0" media="print"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        document.cookie = "last=" + window.location.href + "; expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + ";";
+        $(document).ready(function(){
+            $('#nav').load("nav.jsp");
+            $('#footer').load("footer.html");
+        });
+    </script>
+</head>
+<body>
+    <div id="nav">
+    </div>
+    <div id="content">
+        <div>
+            <h1>
+                Hello World!
+            </h1>
+        </div>
+        <div id="main">
+            <h:form>
+                Name:
+                <h:inputText id="name" size="3" value="#{facesFormBean.name}"/>
+                Mannschaft:
+                <h:selectOneRadio value="#{facesFormBean.discipline}">
+                    <f:selectItem itemValue="Luftgewehr" itemLabel="Luftgewehr" />
+                    <f:selectItem itemValue="Luftpistole" itemLabel="Luftpistole" />
+                </h:selectOneRadio>
+                <ui:repeat value="#{competitionSupplierBean.getLuftgewehr()}" var="var">
+                    Wettkampf #{var.numberInSeason} am #{var.date} in #{var.location}  <br/>
+                    Teilname:
+                    <h:selectOneRadio value="#{facesFormBean.discipline}">
+                        <f:selectItem itemValue="ja" itemLabel="ja" />
+                        <f:selectItem itemValue="nein" itemLabel="nein" />
+                        <!--h:inputText id="anzahlPersonen" size="3" value="#{facesFormBean.name}"/-->
+                    </h:selectOneRadio>
+                </ui:repeat>
+                <h:commandButton value="Submit" action="#{facesFormBean.submit()}"/>
+            </h:form>
+        </div>
+    </div>
+    <div id="footer">
+    </div>
+</body>
+</html>
