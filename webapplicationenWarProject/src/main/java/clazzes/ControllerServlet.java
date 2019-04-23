@@ -1,15 +1,18 @@
 package clazzes;
 
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
+import org.jetbrains.annotations.NotNull;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 
-import org.jetbrains.annotations.NotNull;
-
+import static clazzes.Pages.ERRORPAGE;
+import static clazzes.Pages.LOGIN_INVALID;
+import static clazzes.Pages.LOGIN_SUCCESS;
 import static clazzes.STATIC_NAMES.*;
 import static clazzes.STATIC_NAMES.LoginForm.LOGIN_PASSWORD_PARAMETER_STRING;
 import static clazzes.STATIC_NAMES.LoginForm.LOGIN_USERNAME_PARAMETER_STRING;
@@ -20,15 +23,15 @@ public class ControllerServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getRequestURI());
+        //System.out.println(req.getRequestURI());
         String dispatchTo = req.getParameter(DISPATCH_TO_PARAMETER_STRING);
         dispatchTo = (dispatchTo != null) ? dispatchTo.toLowerCase() : "";
-        System.out.println(DISPATCH_TO_PARAMETER_STRING + " = " + dispatchTo);
+        //System.out.println(DISPATCH_TO_PARAMETER_STRING + " = " + dispatchTo);
         Pages targetPage = Pages.parse(dispatchTo);
         handleGet(targetPage, req, resp);
     }
 
-    private void handleGet(Pages targetPage, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+    private void handleGet(@NotNull Pages targetPage, HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         switch (targetPage) {
             case EMPTY:
                 //toLastSeenPage(req, resp); break; Bug mit redirect
@@ -41,7 +44,9 @@ public class ControllerServlet extends HttpServlet {
             case LOGIN_CHECK:
                 checkLoginForm(req, resp);
                 break;
-            case REGISTER: checkRegisterForm(req, resp);break;
+            case REGISTER:
+                checkRegisterForm(req, resp);
+                break;
             case GUEST:
                 handleGuest(req, resp);
                 break;
@@ -101,14 +106,14 @@ public class ControllerServlet extends HttpServlet {
         try {
             UserDAO.saveBean(newUser);
             req.getSession().setAttribute(USER_SESSION_ATTRIBUTE_STRING, newUser);
-            forwardTo(Pages.LOGIN_SUCCESS, req, resp);
+            forwardTo(LOGIN_SUCCESS, req, resp);
             HSQLDBEmbeddedServer
                     .getInstance()
                     .getConnection()
                     .prepareStatement("INSERT INTO UserData (personId, fname, lname, access) VALUES ('" + newUser.personId + "','" + firstName + "','" + lastName + "','" + access + "')");
         } catch (SQLException e) {
             e.printStackTrace();
-            forwardTo(Pages.ERRORPAGE, req, resp);
+            forwardTo(ERRORPAGE, req, resp);
         }
     }
 
@@ -122,14 +127,14 @@ public class ControllerServlet extends HttpServlet {
                 if (user.checkUsernameAndPassword(usernameParam, passwordParam)) {
                     //System.out.println("LOGIN SUCCESSFUL");
                     req.getSession().setAttribute(USER_SESSION_ATTRIBUTE_STRING, user);
-                    forwardTo(Pages.LOGIN_SUCCESS, req, resp);
+                    forwardTo(LOGIN_SUCCESS, req, resp);
                 } else {
                     //System.out.println("PASSWORD WRONG");
-                    forwardTo(Pages.LOGIN_INVALID, req, resp);
+                    forwardTo(LOGIN_INVALID, req, resp);
                 }
             } else {
                 //System.out.println("USERNAME UNKNOWN");
-                forwardTo(Pages.LOGIN_INVALID, req, resp);
+                forwardTo(LOGIN_INVALID, req, resp);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -165,7 +170,7 @@ public class ControllerServlet extends HttpServlet {
      */
     private void error404(HttpServletRequest req, @NotNull HttpServletResponse resp) throws ServletException, IOException {
         resp.setStatus(404);
-        forwardTo(Pages.ERRORPAGE, req, resp);
+        forwardTo(ERRORPAGE, req, resp);
     }
 
     /**

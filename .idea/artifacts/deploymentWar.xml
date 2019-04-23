@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="deploymentWar">
+    <output-path>$PROJECT_DIR$/out/artifacts/deploymentWar</output-path>
+    <root id="root">
+      <element id="module-output" name="webapplicationenWarProject" />
+    </root>
+  </artifact>
+</component>
