@@ -11,7 +11,7 @@ import static clazzes.STATIC_NAMES.GuestEntryTable.*;
 import static clazzes.STATIC_NAMES.UserData.*;
 import static clazzes.STATIC_NAMES.UsersTable.*;
 
-@SuppressWarnings("Duplicates")
+@SuppressWarnings({"Duplicates", "SqlNoDataSourceInspection"})
 public class HSQLDBEmbeddedServer {
 
     Server hsqlServer;
