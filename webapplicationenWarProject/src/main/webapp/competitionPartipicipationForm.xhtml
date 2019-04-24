@@ -54,7 +54,7 @@
         <h:outputLabel value="#{competitionBean.getCompetitionInfoAsString(competitionSupplierBean)}"/>
         <h:form>
             Teilnahmebestätigung:
-            <h:selectOneRadio value="#{competitionBean.participation}" id="teilnahme" requiredMessage="Bitte ausfüllen">
+            <h:selectOneRadio value="#{competitionBean.participation}" id="teilnahme" requiredMessage="Ausfüllen !" required="true">
                 <f:selectItem itemValue="ja;" itemLabel="ja"/>
                 <f:selectItem itemValue="nein;" itemLabel="nein"/>
             </h:selectOneRadio>

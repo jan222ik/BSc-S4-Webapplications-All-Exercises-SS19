@@ -53,7 +53,8 @@
     <div id="main">
         <h:form>
             Name:
-            <h:inputText id="name" size="6" value="#{mainFormBean.name}"/>
+            <h:inputText id="name" size="6" value="#{mainFormBean.name}" requiredMessage="Name bitte!" required="true"/>
+            <h:message for="name" style="color: red"/><br/>
             Mannschaft:
             <h:selectOneMenu value="#{mainFormBean.team}">
                 <f:selectItem itemValue="Luftgewehr 1" itemLabel="Luftgewehr 1"/>

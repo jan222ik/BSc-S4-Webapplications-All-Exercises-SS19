@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
@@ -83,11 +84,17 @@ public class CompetitionBean {
         try {
             HSQLDBEmbeddedServer.getInstance().getConnection().prepareStatement(
                     "INSERT INTO " + COMPETITION_PARTICIPATION_TABLE_NAME_STRING + "(" + colString + ")" +
-                    " VALUES ('" + bean.getName() +delimit +bean.getTeam() +delimit + trCompetitionId + delimit + participation + delimit + lift
+                    " VALUES ('" + bean.getName() +delimit +bean.getTeam() +delimit + trCompetitionId + delimit + participation + delimit + ((participation.matches("nein") || !selfDrive ) ? 0:lift)
                    + "');").execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        try {
+            context.getExternalContext().redirect(Pages.DATABASE.getFileName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
