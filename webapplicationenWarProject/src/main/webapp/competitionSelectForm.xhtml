@@ -47,19 +47,16 @@
 <div id="content">
     <div>
         <h1>
-           Wettkampfteilnahme
+            Wettkampfauswahl
         </h1>
     </div>
     <div id="main">
         <h:form>
-            Name:
-            <h:inputText id="name" size="6" value="#{mainFormBean.name}"/>
             Mannschaft:
-            <h:selectOneMenu value="#{mainFormBean.team}">
-                <f:selectItem itemValue="Luftgewehr 1" itemLabel="Luftgewehr 1"/>
-                <f:selectItem itemValue="Luftpistole 1" itemLabel="Luftpistole 1"/>
+            <h:selectOneMenu value="#{competitionBean.trCompetitionId}">
+                <f:selectItems value="#{competitionSupplierBean.getForTeam(mainFormBean.team)}" var="var" itemValue="#{var.id}" itemLabel="##{var.numberInSeason} am #{var.date} in #{var.location}"/>
             </h:selectOneMenu>
-            <h:commandButton value="Weiter" action="competitionSelectForm.jsf"/>
+            <h:commandButton value="Weiter" action="competitionPartipicipationForm.jsf"/>
         </h:form>
     </div>
 </div>

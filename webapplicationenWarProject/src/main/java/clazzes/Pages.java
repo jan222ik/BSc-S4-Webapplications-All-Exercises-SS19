@@ -13,6 +13,7 @@ public enum Pages {
     LOGIN("login", "loginPage.jsp", "Login"),
     HISTORY("history", "history.jsp", "History"),
     WETTKAMPF_TEILNAHME("teilnahme", "teilnahme.jsf", "Wettkampf Teilnahme"),
+    DATABASE("database", "databaseData.jsp", "DB DATA VIEW"),
     A11("a11", "dynTableForm.jsp", "Task 11"),
     //INTERNAL SITES
     REGISTER("register", "", null),

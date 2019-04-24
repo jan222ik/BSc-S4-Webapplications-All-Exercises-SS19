@@ -18,4 +18,37 @@ public interface STATIC_NAMES {
         String SIGN_UP_PASSWORD_PARAMETER_STRING = "password";
     }
 
+    interface GuestEntryTable {
+        String GUEST_ENTRY_TABLE_NAME_STRING = "GuestEntry";
+        String GUEST_ENTRY_NAME_ATTRIBUTE_STRING = "name";
+        String GUEST_ENTRY_EMAIL_ATTRIBUTE_STRING = "email";
+        String GUEST_ENTRY_COMMENT_ATTRIBUTE_STRING = "comment";
+
+    }
+
+    interface UsersTable {
+        String USERS_TABLE_NAME_STRING = "Users";
+        String USERS_PERSON_ID_ATTRIBUTE_STRING = "personId";
+        String USERS_USERNAME_ATTRIBUTE_STRING = "username";
+        String USERS_PASSWORD_ATTRIBUTE_STRING = "password";
+    }
+
+    interface UserData {
+        String USER_DATA_TABLE_NAME_STRING = "UserData";
+        String USER_DATA_PERSON_ID_ATTRIBUTE_STRING = "personId";
+        String USER_DATA_FNAME_ATTRIBUTE_STRING = "fname";
+        String USER_DATA_LNAME_ATTRIBUTE_STRING = "lname";
+        String USER_DATA_ACCESS_ATTRIBUTE_STRING = "access";
+    }
+
+    interface CompetitionParticipation {
+        String COMPETITION_PARTICIPATION_TABLE_NAME_STRING = "competition_participation";
+        String COMPETITION_PARTICIPATION_NAME_ATTRIBUTE_STRING = "name";
+        String COMPETITION_PARTICIPATION_TEAM_ATTRIBUTE_STRING = "team";
+        String COMPETITION_PARTICIPATION_COMPETITION_ID_ATTRIBUTE_STRING = "compId";
+        String COMPETITION_PARTICIPATION_ATTEND_ATTRIBUTE_STRING = "attendance";
+        String COMPETITION_PARTICIPATION_LIFT_PLACES_ATTRIBUTE_STRING = "lift";
+    }
+
+
 }

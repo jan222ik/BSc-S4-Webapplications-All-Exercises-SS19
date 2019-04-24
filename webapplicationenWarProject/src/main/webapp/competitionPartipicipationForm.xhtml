@@ -7,8 +7,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"-->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:t="http://java.sun.com/jsf/html">
+      xmlns:f="http://java.sun.com/jsf/core"
+>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
     <meta name="description" content="Login fehlgeschlagen"/>
@@ -47,19 +47,38 @@
 <div id="content">
     <div>
         <h1>
-           Wettkampfteilnahme
+            Wettkampfteilnahme für: <h:outputLabel value="#{mainFormBean.name}"/>
         </h1>
     </div>
     <div id="main">
+        <h:outputLabel value="#{competitionBean.getCompetitionInfoAsString(competitionSupplierBean)}"/>
         <h:form>
-            Name:
-            <h:inputText id="name" size="6" value="#{mainFormBean.name}"/>
-            Mannschaft:
-            <h:selectOneMenu value="#{mainFormBean.team}">
-                <f:selectItem itemValue="Luftgewehr 1" itemLabel="Luftgewehr 1"/>
-                <f:selectItem itemValue="Luftpistole 1" itemLabel="Luftpistole 1"/>
+            Teilnahmebestätigung:
+            <h:selectOneRadio value="#{competitionBean.participation}" id="teilnahme" requiredMessage="Bitte ausfüllen">
+                <f:selectItem itemValue="ja;" itemLabel="ja"/>
+                <f:selectItem itemValue="nein;" itemLabel="nein"/>
+            </h:selectOneRadio>
+            <h:message for="teilnahme" style="color: red"/><br/>
+            Eigene Anreise ?
+            <h:selectBooleanCheckbox value="#{competitionBean.selfDrive}"/>
+            <br/>
+            Kann mitnehmen ?
+            <h:selectOneMenu value="#{competitionBean.lift}">
+                <f:selectItem itemValue="0" itemLabel="0"/>
+                <f:selectItem itemValue="1" itemLabel="1"/>
+                <f:selectItem itemValue="2" itemLabel="2"/>
+                <f:selectItem itemValue="3" itemLabel="3"/>
+                <f:selectItem itemValue="4" itemLabel="4"/>
+                <f:selectItem itemValue="5" itemLabel="5"/>
+                <f:selectItem itemValue="6" itemLabel="6"/>
+                <f:selectItem itemValue="7" itemLabel="7"/>
+                <f:selectItem itemValue="8" itemLabel="8"/>
+                <f:selectItem itemValue="9" itemLabel="9"/>
+                <f:selectItem itemValue="10" itemLabel="10"/>
             </h:selectOneMenu>
-            <h:commandButton value="Weiter" action="competitionSelectForm.jsf"/>
+
+
+            <h:commandButton value="Absenden" action="#{competitionBean.submit()}"/>
         </h:form>
     </div>
 </div>

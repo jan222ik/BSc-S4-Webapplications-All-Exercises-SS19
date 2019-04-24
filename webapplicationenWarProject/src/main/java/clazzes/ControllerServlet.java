@@ -10,13 +10,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
-import static clazzes.Pages.ERRORPAGE;
-import static clazzes.Pages.LOGIN_INVALID;
-import static clazzes.Pages.LOGIN_SUCCESS;
+import static clazzes.Pages.*;
 import static clazzes.STATIC_NAMES.*;
 import static clazzes.STATIC_NAMES.LoginForm.LOGIN_PASSWORD_PARAMETER_STRING;
 import static clazzes.STATIC_NAMES.LoginForm.LOGIN_USERNAME_PARAMETER_STRING;
 import static clazzes.STATIC_NAMES.SignUpForm.*;
+import static clazzes.STATIC_NAMES.UserData.USER_DATA_TABLE_NAME_STRING;
 
 @WebServlet(name = "con", urlPatterns = {"//*", "/con"})
 public class ControllerServlet extends HttpServlet {
@@ -68,9 +67,12 @@ public class ControllerServlet extends HttpServlet {
             case HISTORY:
                 forwardTo(Pages.HISTORY, req, resp);
                 break;
+            case DATABASE:
+                forwardTo(Pages.DATABASE, req, resp);
+                break;
             case WETTKAMPF_TEILNAHME:
                 //resp.sendRedirect(Pages.WETTKAMPF_TEILNAHME.getFileName());
-                forwardTo(Pages.WETTKAMPF_TEILNAHME, req, resp);
+                checkLoginStatus(Pages.WETTKAMPF_TEILNAHME, req, resp);
                 break;
             default:
                 error404(req, resp);
@@ -110,7 +112,7 @@ public class ControllerServlet extends HttpServlet {
             HSQLDBEmbeddedServer
                     .getInstance()
                     .getConnection()
-                    .prepareStatement("INSERT INTO UserData (personId, fname, lname, access) VALUES ('" + newUser.personId + "','" + firstName + "','" + lastName + "','" + access + "')");
+                    .prepareStatement("INSERT INTO " + USER_DATA_TABLE_NAME_STRING +" (personId, fname, lname, access) VALUES ('" + newUser.personId + "','" + firstName + "','" + lastName + "','" + access + "')").execute();
         } catch (SQLException e) {
             e.printStackTrace();
             forwardTo(ERRORPAGE, req, resp);

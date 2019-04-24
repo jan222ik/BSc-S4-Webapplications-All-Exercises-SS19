@@ -6,6 +6,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import static clazzes.STATIC_NAMES.CompetitionParticipation.*;
+import static clazzes.STATIC_NAMES.GuestEntryTable.*;
+import static clazzes.STATIC_NAMES.UserData.*;
+import static clazzes.STATIC_NAMES.UsersTable.*;
+
+@SuppressWarnings("Duplicates")
 public class HSQLDBEmbeddedServer {
 
     Server hsqlServer;
@@ -37,9 +43,10 @@ public class HSQLDBEmbeddedServer {
             // with an empty password
             connection = DriverManager.getConnection("jdbc:hsqldb:hsql://localhost/xdb", "sa", "");
             //CREATE Table
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS GuestEntry (name VARCHAR(50),email VARCHAR(50), comment VARCHAR(144));").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS Users (personId BIGINT, username VARCHAR(50), password VARCHAR(50), PRIMARY KEY (personId));").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS UserData (personId BIGINT, fname VARCHAR(50), lname VARCHAR(50), access VARCHAR(50), FOREIGN KEY (personId) REFERENCES  Users(personId))").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + GUEST_ENTRY_TABLE_NAME_STRING + " (" + GUEST_ENTRY_NAME_ATTRIBUTE_STRING + " VARCHAR(50)," + GUEST_ENTRY_EMAIL_ATTRIBUTE_STRING + " VARCHAR(50), " + GUEST_ENTRY_COMMENT_ATTRIBUTE_STRING + " VARCHAR(144));").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + USERS_TABLE_NAME_STRING +" (" + USERS_PERSON_ID_ATTRIBUTE_STRING + " BIGINT, " + USERS_USERNAME_ATTRIBUTE_STRING + " VARCHAR(50), " + USERS_PASSWORD_ATTRIBUTE_STRING + " VARCHAR(50), PRIMARY KEY (" + USERS_PERSON_ID_ATTRIBUTE_STRING + "));").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + USER_DATA_TABLE_NAME_STRING +" (" + USER_DATA_PERSON_ID_ATTRIBUTE_STRING + " BIGINT, " + USER_DATA_FNAME_ATTRIBUTE_STRING + " VARCHAR(50), " + USER_DATA_LNAME_ATTRIBUTE_STRING + " VARCHAR(50), " + USER_DATA_ACCESS_ATTRIBUTE_STRING + " VARCHAR(50), FOREIGN KEY (" + USER_DATA_PERSON_ID_ATTRIBUTE_STRING + ") REFERENCES  " + USERS_TABLE_NAME_STRING + "(" + USERS_PERSON_ID_ATTRIBUTE_STRING +"))").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + COMPETITION_PARTICIPATION_TABLE_NAME_STRING + " (" + COMPETITION_PARTICIPATION_NAME_ATTRIBUTE_STRING + " VARCHAR(50)," + COMPETITION_PARTICIPATION_TEAM_ATTRIBUTE_STRING + " VARCHAR(50), " + COMPETITION_PARTICIPATION_COMPETITION_ID_ATTRIBUTE_STRING + " VARCHAR(50)," + COMPETITION_PARTICIPATION_ATTEND_ATTRIBUTE_STRING + " VARCHAR(50)," + COMPETITION_PARTICIPATION_LIFT_PLACES_ATTRIBUTE_STRING + " VARCHAR(50))").execute();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
@@ -60,12 +67,14 @@ public class HSQLDBEmbeddedServer {
 
     public void reset() {
         try {
-            connection.prepareStatement("DROP TABLE IF EXISTS GuestEntry").execute();
-            connection.prepareStatement("DROP TABLE IF EXISTS Users").execute();
-            connection.prepareStatement("DROP TABLE IF EXISTS UserData").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS GuestEntry (name VARCHAR(50),email VARCHAR(50), comment VARCHAR(144));").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS Users (personId BIGINT, username VARCHAR(50), password VARCHAR(50), PRIMARY KEY (personId));").execute();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS UserData (personId BIGINT, fname VARCHAR(50), lname VARCHAR(50), access INT, FOREIGN KEY (personId) REFERENCES  Users(personId))").execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS " + GUEST_ENTRY_TABLE_NAME_STRING).execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS " + USERS_TABLE_NAME_STRING).execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS " + USER_DATA_TABLE_NAME_STRING).execute();
+            connection.prepareStatement("DROP TABLE IF EXISTS " + COMPETITION_PARTICIPATION_TABLE_NAME_STRING).execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + GUEST_ENTRY_TABLE_NAME_STRING + " (" + GUEST_ENTRY_NAME_ATTRIBUTE_STRING + " VARCHAR(50)," + GUEST_ENTRY_EMAIL_ATTRIBUTE_STRING + " VARCHAR(50), " + GUEST_ENTRY_COMMENT_ATTRIBUTE_STRING + " VARCHAR(144));").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + USERS_TABLE_NAME_STRING +" (" + USERS_PERSON_ID_ATTRIBUTE_STRING + " BIGINT, " + USERS_USERNAME_ATTRIBUTE_STRING + " VARCHAR(50), " + USERS_PASSWORD_ATTRIBUTE_STRING + " VARCHAR(50), PRIMARY KEY (" + USERS_PERSON_ID_ATTRIBUTE_STRING + "));").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + USER_DATA_TABLE_NAME_STRING +" (" + USER_DATA_PERSON_ID_ATTRIBUTE_STRING + " BIGINT, " + USER_DATA_FNAME_ATTRIBUTE_STRING + " VARCHAR(50), " + USER_DATA_LNAME_ATTRIBUTE_STRING + " VARCHAR(50), " + USER_DATA_ACCESS_ATTRIBUTE_STRING + " VARCHAR(50), FOREIGN KEY (" + USER_DATA_PERSON_ID_ATTRIBUTE_STRING + ") REFERENCES  " + USERS_TABLE_NAME_STRING + "(" + USERS_PERSON_ID_ATTRIBUTE_STRING +"))").execute();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS " + COMPETITION_PARTICIPATION_TABLE_NAME_STRING + " (" + COMPETITION_PARTICIPATION_NAME_ATTRIBUTE_STRING + " VARCHAR(50)," + COMPETITION_PARTICIPATION_TEAM_ATTRIBUTE_STRING + " VARCHAR(50), " + COMPETITION_PARTICIPATION_COMPETITION_ID_ATTRIBUTE_STRING + " VARCHAR(50)," + COMPETITION_PARTICIPATION_ATTEND_ATTRIBUTE_STRING + " VARCHAR(50)," + COMPETITION_PARTICIPATION_LIFT_PLACES_ATTRIBUTE_STRING + " VARCHAR(50))").execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }
