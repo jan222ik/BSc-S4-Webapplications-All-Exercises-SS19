@@ -35,10 +35,10 @@ public class ControllerServlet extends HttpServlet {
             case EMPTY:
                 //toLastSeenPage(req, resp); break; Bug mit redirect
             case START:
-                forwardTo(Pages.START, req, resp);
+                forwardTo(START, req, resp);
                 break;
             case MEMBER:
-                forwardTo(Pages.MEMBER, req, resp);
+                forwardTo(MEMBER, req, resp);
                 break;
             case LOGIN_CHECK:
                 checkLoginForm(req, resp);
@@ -50,29 +50,36 @@ public class ControllerServlet extends HttpServlet {
                 handleGuest(req, resp);
                 break;
             case A11:
-                forwardTo(Pages.A11, req, resp);
+                forwardTo(A11, req, resp);
                 break;
             case LOGIN:
-                forwardTo(Pages.LOGIN, req, resp);
+                forwardTo(LOGIN, req, resp);
                 break;
             case LICHTGEWEHR:
-                checkLoginStatus(Pages.LICHTGEWEHR, req, resp);
+                checkLoginStatus(LICHTGEWEHR, req, resp);
                 break;
             case LUFTGEWEHR:
-                checkLoginStatus(Pages.LUFTGEWEHR, req, resp);
+                checkLoginStatus(LUFTGEWEHR, req, resp);
                 break;
             case LUFTPISTOLE:
-                checkLoginStatus(Pages.LUFTPISTOLE, req, resp);
+                checkLoginStatus(LUFTPISTOLE, req, resp);
                 break;
             case HISTORY:
-                forwardTo(Pages.HISTORY, req, resp);
+                forwardTo(HISTORY, req, resp);
                 break;
             case DATABASE:
-                forwardTo(Pages.DATABASE, req, resp);
+                forwardTo(DATABASE, req, resp);
+                break;
+            case WETTKAMPF_TEILNAHME_RESULT:
+                checkLoginStatus(WETTKAMPF_TEILNAHME_RESULT, req, resp);
                 break;
             case WETTKAMPF_TEILNAHME:
                 //resp.sendRedirect(Pages.WETTKAMPF_TEILNAHME.getFileName());
-                checkLoginStatus(Pages.WETTKAMPF_TEILNAHME, req, resp);
+                checkLoginStatus(WETTKAMPF_TEILNAHME, req, resp);
+                break;
+            case RESET_WETTKAMPF:
+                HSQLDBEmbeddedServer.getInstance().resetWettkampfTables();
+                forwardTo(DATABASE, req, resp);
                 break;
             default:
                 error404(req, resp);
@@ -93,7 +100,7 @@ public class ControllerServlet extends HttpServlet {
         }
     }
 
-    private void checkRegisterForm(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    private void checkRegisterForm(@NotNull HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String firstName = req.getParameter(SIGN_UP_FIRST_NAME_PARAMETER_STRING);
         String lastName = req.getParameter(SIGN_UP_LAST_NAME_PARAMETER_STRING);
         String access = req.getParameter(SIGN_UP_ACCESS_PARAMETER_STRING);

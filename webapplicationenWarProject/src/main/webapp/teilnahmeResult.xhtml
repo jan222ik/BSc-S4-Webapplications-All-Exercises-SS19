@@ -7,11 +7,11 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"-->
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
->
+      xmlns:f="http://java.sun.com/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:t="http://java.sun.com/jsf/html">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
-    <meta name="description" content="Login fehlgeschlagen"/>
+    <meta name="description" content="Teilnahme Ergebnisse"/>
     <meta name="author" content="Janik Mayr"/>
     <meta name="rating" content="safe for kids"/>
     <meta name="reply-to" content="admin@host.com"/>
@@ -47,41 +47,42 @@
 <div id="content">
     <div>
         <h1>
-            Wettkampfteilnahme für: <h:outputLabel value="#{mainFormBean.name}"/>
+            Wettkampfteilnahme Ergebnisse
         </h1>
     </div>
     <div id="main">
-        <h:outputLabel value="#{competitionBean.getCompetitionInfoAsString(competitionSupplierBean)}"/>
         <h:form>
-            Teilnahmebestätigung:
-            <h:selectOneRadio value="#{competitionBean.participation}" id="teilnahme" requiredMessage="Ausfüllen !" required="true">
-                <f:selectItem itemValue="ja;" itemLabel="ja"/>
-                <f:selectItem itemValue="nein;" itemLabel="nein"/>
-            </h:selectOneRadio>
-            <h:message for="teilnahme" style="color: red"/><br/>
-            Eigene Anreise ?
-            <h:selectBooleanCheckbox value="#{competitionBean.selfDrive}"/>
-            <br/>
-            Kann mitnehmen ?
-            <h:selectOneMenu value="#{competitionBean.lift}">
-                <f:selectItem itemValue="0" itemLabel="0"/>
-                <f:selectItem itemValue="1" itemLabel="1"/>
-                <f:selectItem itemValue="2" itemLabel="2"/>
-                <f:selectItem itemValue="3" itemLabel="3"/>
-                <f:selectItem itemValue="4" itemLabel="4"/>
-                <f:selectItem itemValue="5" itemLabel="5"/>
-                <f:selectItem itemValue="6" itemLabel="6"/>
-                <f:selectItem itemValue="7" itemLabel="7"/>
-                <f:selectItem itemValue="8" itemLabel="8"/>
-                <f:selectItem itemValue="9" itemLabel="9"/>
-                <f:selectItem itemValue="10" itemLabel="10"/>
+            Mannschaft:
+            <h:selectOneMenu value="#{resultBean.team}">
+                <f:selectItem itemValue="Luftgewehr 1" itemLabel="Luftgewehr 1"/>
+                <f:selectItem itemValue="Luftpistole 1" itemLabel="Luftpistole 1"/>
             </h:selectOneMenu>
-            <br/>
-            Kommentar:<br/>
-            <h:inputTextarea cols="5" value="#{competitionBean.comment}"/>
-
-            <h:commandButton value="Absenden" action="#{competitionBean.submit()}"/>
+            <h:commandButton value="Anzeigen" action="#{resultBean.submit()}"/>
         </h:form>
+        <ui:repeat value="#{resultBean.getParticipants()}" var="name">
+            <t:outputLabel value="#{name}"/>
+            <h:dataTable value="#{resultBean.getResultEntry(name)}" var="o">
+                <h:column>
+                    <f:facet name="header">Wettkampf #</f:facet>
+                    #{competitionSupplierBean.getCompetitionFromId(o.compID).numberInSeason}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Teilnahme</f:facet>
+                    #{o.participation}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Eigenanreise</f:facet>
+                    #{o.getSelf()}
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Mitnahmemöglichkeiten</f:facet>
+                    #{o.lift}
+                </h:column>
+            </h:dataTable>
+        </ui:repeat>
     </div>
 </div>
 <div id="footer">

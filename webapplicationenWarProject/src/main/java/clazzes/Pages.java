@@ -12,9 +12,11 @@ public enum Pages {
     MEMBER("member", "member.jsp", "Mitglieder"),
     LOGIN("login", "loginPage.jsp", "Login"),
     HISTORY("history", "history.jsp", "History"),
-    WETTKAMPF_TEILNAHME("teilnahme", "teilnahme.jsf", "Wettkampf Teilnahme"),
+    WETTKAMPF_TEILNAHME("teilnahme", "teilnahme.jsf", "Wettkampf\nTeilnahme"),
     DATABASE("database", "databaseData.jsp", "DB DATA VIEW"),
+    WETTKAMPF_TEILNAHME_RESULT("teilnahmeergebnisse", "teilnahmeResult.jsf", "Ergebnisse\nTeilnahme"),
     A11("a11", "dynTableForm.jsp", "Task 11"),
+    RESET_WETTKAMPF("dummydata", null, "Reset & fill\nTable with\nDummy Data"),
     //INTERNAL SITES
     REGISTER("register", "", null),
     LOGIN_SUCCESS("loginsuccess", "loginSuccess.jsp", null),
@@ -37,7 +39,7 @@ public enum Pages {
 
     public static Pages parse(String dispatchTo) {
         for (Pages p : Pages.values()) {
-            if (p.getDispatchString().equals(dispatchTo)) {
+            if (p.getDispatchString().toLowerCase().equals(dispatchTo)) {
                 return p;
             }
         }
@@ -61,6 +63,7 @@ public enum Pages {
         return "/" + fileName;
     }
 
+    @Contract(pure = true)
     public String getDisplayName() {
         return displayName;
     }

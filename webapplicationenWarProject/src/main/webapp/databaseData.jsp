@@ -177,6 +177,12 @@
                 <th>
                     <%=COMPETITION_PARTICIPATION_LIFT_PLACES_ATTRIBUTE_STRING%>
                 </th>
+                <th>
+                    <%=COMPETITION_PARTICIPATION_SELF_ATTRIBUTE_STRING%>
+                </th>
+                <th>
+                    <%=COMPETITION_PARTICIPATION_COMMENT_ATTRIBUTE_STRING%>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -189,7 +195,9 @@
                                 + resultSet.getString(COMPETITION_PARTICIPATION_TEAM_ATTRIBUTE_STRING) + "</td><td>"
                                 + resultSet.getString(COMPETITION_PARTICIPATION_COMPETITION_ID_ATTRIBUTE_STRING) + "</td><td>"
                                 + resultSet.getString(COMPETITION_PARTICIPATION_ATTEND_ATTRIBUTE_STRING) + "</td><td>"
-                                + resultSet.getString(COMPETITION_PARTICIPATION_LIFT_PLACES_ATTRIBUTE_STRING) + "</td></tr>");
+                                + resultSet.getString(COMPETITION_PARTICIPATION_LIFT_PLACES_ATTRIBUTE_STRING) + "</td><td>"
+                                + resultSet.getString(COMPETITION_PARTICIPATION_SELF_ATTRIBUTE_STRING) + "</td><td>"
+                                + resultSet.getString(COMPETITION_PARTICIPATION_COMMENT_ATTRIBUTE_STRING) + "</td></tr>");
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();

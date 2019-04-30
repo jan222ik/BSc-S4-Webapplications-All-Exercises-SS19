@@ -6,6 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 
@@ -13,11 +14,12 @@ import static clazzes.STATIC_NAMES.CompetitionParticipation.*;
 
 @ManagedBean
 @SessionScoped
-public class CompetitionBean {
+public class CompetitionBean implements Serializable {
     private String participation;
     private Boolean selfDrive;
     private int trCompetitionId;
     private int lift;
+    private String comment = "";
 
     public void setParticipation(String value) {
         System.out.println(value);
@@ -80,12 +82,30 @@ public class CompetitionBean {
                 + COMPETITION_PARTICIPATION_TEAM_ATTRIBUTE_STRING + delimitWSpace
                 + COMPETITION_PARTICIPATION_COMPETITION_ID_ATTRIBUTE_STRING + delimitWSpace
                 + COMPETITION_PARTICIPATION_ATTEND_ATTRIBUTE_STRING + delimitWSpace
-                + COMPETITION_PARTICIPATION_LIFT_PLACES_ATTRIBUTE_STRING;
+                + COMPETITION_PARTICIPATION_SELF_ATTRIBUTE_STRING + delimitWSpace
+                + COMPETITION_PARTICIPATION_LIFT_PLACES_ATTRIBUTE_STRING + delimitWSpace
+                + COMPETITION_PARTICIPATION_COMMENT_ATTRIBUTE_STRING;
+        System.out.println(colString);
         try {
             HSQLDBEmbeddedServer.getInstance().getConnection().prepareStatement(
                     "INSERT INTO " + COMPETITION_PARTICIPATION_TABLE_NAME_STRING + "(" + colString + ")" +
-                    " VALUES ('" + bean.getName() +delimit +bean.getTeam() +delimit + trCompetitionId + delimit + participation + delimit + ((participation.matches("nein") || !selfDrive ) ? 0:lift)
-                   + "');").execute();
+                            " VALUES ('" + bean.getName() + delimit
+                            + bean.getTeam() + delimit
+                            + trCompetitionId + delimit
+                            + participation + delimit
+                            + selfDrive + delimit
+                            + ((participation.matches("nein")) ? 0 : lift) + delimit
+                            + comment
+                            + "');").execute();
+            System.out.println("INSERT INTO " + COMPETITION_PARTICIPATION_TABLE_NAME_STRING + "(" + colString + ")" +
+            " VALUES ('" + bean.getName() + delimit
+                    + bean.getTeam() + delimit
+                    + trCompetitionId + delimit
+                    + participation + delimit
+                    + selfDrive + delimit
+                    + ((participation.matches("nein")) ? 0 : lift) + delimit
+                    + comment
+                    + "');");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,5 +125,13 @@ public class CompetitionBean {
                 ", trCompetitionId=" + trCompetitionId +
                 ", lift=" + lift +
                 '}';
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }
