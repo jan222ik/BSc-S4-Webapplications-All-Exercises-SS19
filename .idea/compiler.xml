@@ -8,8 +8,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="webaplikationen01a" />
         <module name="webapplicationenWarProject" />
-        <module name="webUE11" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="webUE11" target="7" />
+    </bytecodeTargetLevel>
   </component>
 </project>
