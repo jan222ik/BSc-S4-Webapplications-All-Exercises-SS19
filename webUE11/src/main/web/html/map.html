@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feed Display</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+          integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+          crossorigin=""/>
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+            integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+            crossorigin=""></script>
+    <style>
+        #map {
+            height: 600px;
+        }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<div id="feed"></div>
+<script>
+    /*
+    let long = 47.45;
+    let lat = 9.75;
+    var mymap = L.map('map').setView([long, lat], 13);
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        id: 'mapbox.streets',
+        accessToken: 'pk.eyJ1IjoiMmphbjIyMiIsImEiOiJjanZjYXJkYzQwMGJiNDNta2cydXJrMWRiIn0.Ag92-UQbBAWIRVCzomA2uQ'
+    }).addTo(mymap);
+    var marker = L.marker([long, lat]).addTo(mymap);
+    for (let i = 0; i < 50; i++) {
+        //L.marker([long + i, lat]).addTo(mymap);
+    }
+    */
+    //https://api.rss2json.com/v1/api.json?rss_url=http%3A%2F%2Fstatic.fsf.org%2Ffsforg%2Frss%2Fevents.xml&api_key=eexlmjn6ptrhxdzwibs3jdibfbg15enobiutfs9y
+
+    function setMarker(element) {
+        console.log("Set Marker");
+        console.log(element);
+        //L.marker(element, 13).addTo(mymap);
+        return 0;
+    }
+
+    fetch("http://static.fsf.org/fsforg/rss/events.xml").then((res) => {
+        console.log("nani");
+        res.text().then((xmlTxt) => {
+            console.log("nani1");
+            let domParser = new DOMParser();
+            let doc = domParser.parseFromString(xmlTxt, 'text/xml');
+            console.log(doc.hasChildNodes());
+            console.log(doc);
+            doc.querySelectorAll('item').forEach((item) => {
+                console.log("nani2");
+                let h1 = document.createElement('h1');
+                h1.textContent = item.querySelector('title').textContent;
+                console.log(item);
+                console.log(item.querySelector('title'));
+                let element = item.querySelector('description');
+                console.log(element);
+                h1.onclick = function() { setMarker(item.querySelector('description').textContent); };
+                //https://nominatim.openstreetmap.org/search?q=dornbirn&format=json
+                let feed = document.querySelector('#feed');
+                feed.appendChild(h1);
+            })
+        })
+    });
+
+
+    //function showFeed() {
+    //  console.log("Executed")
+    //}
+</script>
+<!--script type="text/javascript"
+        src="https://api.rss2json.com/v1/api.json?callback=showFeed&rss_url=http://static.fsf.org/fsforg/rss/events.xml">
+</script-->
+</body>
+</html>
