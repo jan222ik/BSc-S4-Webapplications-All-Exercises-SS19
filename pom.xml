@@ -36,7 +36,7 @@
     </build>
     <modules>
         <module>webapplicationenWarProject</module>
-        <module>webUE11</module>
+
     </modules>
     <dependencies>
         <dependency>

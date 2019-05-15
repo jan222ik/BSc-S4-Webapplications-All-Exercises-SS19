@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="JavaServerFaces" />
         <module name="webaplikationen01a" />
         <module name="webapplicationenWarProject" />
       </profile>

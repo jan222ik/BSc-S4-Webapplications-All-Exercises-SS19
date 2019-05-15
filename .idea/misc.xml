@@ -3,6 +3,7 @@
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="FrameworkDetectionExcludesConfiguration">
     <file type="web" url="file://$PROJECT_DIR$/webapplicationenWarProject" />
+    <file type="web" url="file://$PROJECT_DIR$/webUE12" />
   </component>
   <component name="JavaScriptSettings">
     <option name="languageLevel" value="FLOW" />
@@ -11,6 +12,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/webUE12/pom.xml" />
       </list>
     </option>
   </component>

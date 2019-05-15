@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Char Counter</title>
+</head>
+<body>
+<h1>Enter Text</h1>
+<label for="countMe">
+    <input type="text" id="countMe" onkeyup="count()">
+</label>
+<div id="output"></div>
+<script>
+    let xmlHttp;
+    function count() {
+        //if (xmlHttp !== null && xmlHttp !== undefined) {xmlHttp.abort();}
+        ajaxAsyncRequest("count", document.getElementById("countMe").value);
+    }
+    function ajaxAsyncRequest(reqURL, input) {
+        /* As base: https://howtodoinjava.com/ajax/complete-ajax-tutorial/ */
+        xmlHttp = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+        xmlHttp.open("POST", reqURL, true);
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState === 4) {
+                if (xmlHttp.status === 200) {
+                    document.getElementById("output").innerHTML = `Length: ${xmlHttp.responseText}`;
+                } else {
+                    alert('Some thing wrong');
+                }}};
+        xmlHttp.send(`input:${input}`);
+    }
+</script>
+</body>
+</html>
