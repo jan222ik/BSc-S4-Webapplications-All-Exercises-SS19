@@ -1,7 +1,7 @@
 {
-  "name": "video-stream-sample",
+  "name": "video-loader",
   "version": "1.0.0",
-  "description": "Streaming video example",
+  "description": "video loader",
   "main": "server.js",
   "engines": {
     "node": ">=6.2.0"
@@ -9,7 +9,7 @@
   "scripts": {
     "start": "nodemon server.js"
   },
-  "author": "daspinola",
+  "author": "janik mayr",
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.3",
