@@ -79,7 +79,7 @@ Ordner für Videos: ./public/videos/<br/>
                            const head = {
                                 'Content-Length': fileSize,
                                 'Content-Type': 'video/mp4',
-                           []() };
+                           };
                        ```
                    2) Response senden<br/>
                        Header mit Code 200, da alles übermittelt wird.
