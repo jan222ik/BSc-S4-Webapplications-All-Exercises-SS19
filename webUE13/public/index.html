@@ -1,17 +1,18 @@
 <html>
 
 <head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
+  <title>VideoLoader</title>
+
   <script>
     function loadVideo() {
       let div = document.getElementById("vp");
       let name = document.getElementById("vn").value;
-      console.log(name);
       if (name !== undefined && name !== null && name.length > 0) {
-        console.log(`Search Video: ${name}`);
-        div.innerHTML = `<video controls autoplay><source src="/video?vid=${name}" type="video/mp4"></video>`;
+        div.innerHTML = `<video controls autoplay><source onerror="handleError()" src="/video?vid=${name}" type="video/mp4"></video>`;
       }
+    }
+    function handleError() {
+      alert('Video not found');
     }
   </script>
 </head>
@@ -24,6 +25,11 @@
   </form>
   <div id="vp">
   </div>
+  <p>
+    Existing Files:<br/>
+      * turtle.mp4    also found as: 'turtle' and 't'<br/>
+      * yellifish.mp4 also found as: 'yellifish', 'yelli' and 'y'<br/>
+  </p>
 </body>
 
 </html>

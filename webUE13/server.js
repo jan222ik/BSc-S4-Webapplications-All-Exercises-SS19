@@ -16,45 +16,54 @@ app.get('/video', function (req, res) {
     let path;
     if (param !== undefined) {
         if (param === 'yellifish' || param === 'yelli' || param === 'y') {
-            path = 'public/images/yellifish.mp4';
-            console.log("yellyVID");
+            path = 'public/videos/yellifish.mp4';
         } else {
             if (param === 'turtle' || param === 't') {
-                path = 'public/images/turtle.mp4';
-                console.log("turtleVID");
+                path = 'public/videos/turtle.mp4';
             } /*ADD ELSE IF FOR OTHER VIDEOS HERE*/
         }
-    }
-    console.log(path);
-    if (path !== undefined) {
-        const stat = fs.statSync(path);
-        const fileSize = stat.size;
-        const range = req.headers.range;
-        console.log(range);
-
-        if (range) {
-            const parts = range.replace(/bytes=/, "").split("-");
-            const start = parseInt(parts[0], 10);
-            const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
-            const chunksize = (end - start) + 1;
-            const file = fs.createReadStream(path, {start, end});
-            const head = {
-                'Content-Range': `bytes ${start}-${end}/${fileSize}`,
-                'Accept-Ranges': 'bytes',
-                'Content-Length': chunksize,
-                'Content-Type': 'video/mp4',
-            };
-
-            res.writeHead(206, head);
-            file.pipe(res);
-        } else {
-            const head = {
-                'Content-Length': fileSize,
-                'Content-Type': 'video/mp4',
-            };
-            res.writeHead(200, head);
-            fs.createReadStream(path).pipe(res);
+        if (path === undefined || path == null) {
+            path = `public/videos/${param}`;
         }
+        fs.access(path, fs.F_OK, (err) => {
+            if (err) {
+                console.error(err);
+                res.status(404)        // HTTP status 404: NotFound
+                    .send('Not found');
+            } else {
+                console.log(path);
+                if (path !== undefined) {
+                    const stat = fs.statSync(path);
+                    const fileSize = stat.size;
+                    const range = req.headers.range;
+                    console.log(range);
+
+                    if (range) {
+                        const parts = range.replace(/bytes=/, "").split("-");
+                        const start = parseInt(parts[0], 10);
+                        const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+                        const chunksize = (end - start) + 1;
+                        const file = fs.createReadStream(path, {start, end});
+                        const head = {
+                            'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+                            'Accept-Ranges': 'bytes',
+                            'Content-Length': chunksize,
+                            'Content-Type': 'video/mp4',
+                        };
+
+                        res.writeHead(206, head);
+                        file.pipe(res);
+                    } else {
+                        const head = {
+                            'Content-Length': fileSize,
+                            'Content-Type': 'video/mp4',
+                        };
+                        res.writeHead(200, head);
+                        fs.createReadStream(path).pipe(res);
+                    }
+                }
+            }
+        });
     }
 });
 
