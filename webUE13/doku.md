@@ -23,13 +23,13 @@ Ordner für Videos: ./public/videos/<br/>
      ```
 2) Existiert Datei auf Pfad ?
     ```javascript
-        fs.access(path, fs.F_OK, (err) => { //Nicht blockirender Zurgriff auf FileSystem,
-            if (err) {                      // wenn File mit geg. Path nicht existiert wird ein Fehler geworden.
-                //------- DATEI EXISTIERT NICHT FLOW -------
-            } else {
-                //------- DATEI EXISTIERT FLOW -------
-            }
-        }
+       fs.access(path, fs.F_OK, (err) => { //Nicht blockirender Zurgriff auf FileSystem,
+           if (err) {                      // wenn File mit geg. Path nicht existiert wird ein Fehler geworden.
+               //------- DATEI EXISTIERT NICHT FLOW -------
+           } else {
+               //------- DATEI EXISTIERT FLOW -------
+           }
+       }
     ```
     1)  Datei Existiert <br/>
            1) Größe des Files in ```fileSize``` Laden
