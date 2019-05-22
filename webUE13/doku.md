@@ -61,13 +61,13 @@ Ordner für Videos: ./public/videos/<br/>
                             'Content-Length': chunksize,
                             /*
                                 Content-Type hard-coded auf mp4, falls andere Videoformate verfügbar,
-                                muss dynamisch sein/von File ableiten
+                                muss dynamisch von File ableitent werden
                             */
                             'Content-Type': 'video/mp4',
                        };
                        ```
                    7) Response senden<br/>
-                    Header mit Code 206 auf Stream schreiben. Code 206 bedeutet, dass es sich partial content handelt und der Client den Rest noch anfragen muss. Das File wird anschließend in den Responsebody geschrieben.
+                    Header mit Code 206 auf Stream schreiben. Code 206 bedeutet, dass es sich um partial content handelt und der Client den Rest noch anfragen muss. Der Chunk des File wird anschließend in den Responsebody geschrieben.
                        ```javascript
                            res.writeHead(206, head);
                            file.pipe(res);
