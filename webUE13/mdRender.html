@@ -1,0 +1,104 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="file:/Z:/Users/jan22/.markdownNavigator/multimarkdown_layout.css">
+    <style>
+
+        body.multimarkdown-preview,
+        body.multimarkdown-wiki-preview {
+            font-size: 11px;
+        }
+    </style>
+    <link rel="stylesheet" href="file:/Z:/Users/jan22/.markdownNavigator/multimarkdown_darcula.css">
+</head>
+<body class="multimarkdown-preview">
+<div class="content">
+    <div class="page-header"><a href="https://github.com/jan222ik/webaplikationen01/blob/master/webUE13/doku.md" name="wikipage" id="wikipage" title="Click here to open the file on GitHub">doku.md</a></div>
+    <div class="hr"></div>
+    <p md-pos="0-72">Dokumentation UE 13<br/>
+        GET auf Path: /video mit Parameter ?vid=‘name‘</p>
+    <ol>
+        <li md-pos="72-557">Video identifizieren
+            <pre md-pos="101-558"><code class="javascript" md-pos="120-549">/* Mithilfe von simplem Entscheidungsbaum. */
+if (param !== undefined) {
+    if (param === 'yellifish' || param === 'yelli' || param === 'y') {
+        path = 'public/images/yellifish.mp4';   //Video über Quallen
+} else {
+    if (param === 'turtle' || param === 't') {
+        path = 'public/images/turtle.mp4';      //Video über Schildkröten
+    } /*ADD ELSE IF FOR OTHER VIDEOS HERE*/
+}
+</code></pre>
+        </li>
+        <li md-pos="558-3621">Pfad Existiert <br/>
+            <ol>
+                <li md-pos="590-634">Größe des Files in <code md-pos="615-623">fileSize</code> Laden</li>
+                <li md-pos="641-832">Aus Request die Range der Bytes aus Header <code md-pos="690-721">const range = req.headers.range</code> abfragen. (Fromat Range: <code md-pos="753-764">bytes=%d-%d</code>, erste Zahl: Start Byte, Zweite Zahl: Bis Byte x maximal laden)</li>
+                <li md-pos="839-3621">Range r mit ?
+                    <ol>
+                        <li md-pos="867-2846"><code md-pos="873-879">r[0,_[</code>:
+                            <ol>
+                                <li md-pos="900-945">Stringmanipulation von Range-ObjectString</li>
+                                <li md-pos="960-1006">Byterangestart parsen zu Integer(Radix 10)</li>
+                                <li md-pos="1021-1373">Byterangeende parsen zu Integer(Radix 10)
+                                    <pre md-pos="1085-1374"><code class="{javascript" md-pos="1124-1351">/*Schritt a-c*/
+const parts = range.replace(/bytes=/, &quot;&quot;).split(&quot;-&quot;);
+const start = parseInt(parts[0], 10);
+const end = parts[1] ? parseInt(parts[1], 10) : fileSize - 1;
+</code></pre>
+                                </li>
+                                <li md-pos="1389-1450">Chunkgröße ermitteln <code md-pos="1416-1446">chunksize = (end - start) + 1;</code></li>
+                                <li md-pos="1465-1539">Dateisector laden <code md-pos="1489-1535">file = fs.createReadStream(path, {start, end})</code></li>
+                                <li md-pos="1554-2455">Response-Header erzeugen
+                                    <pre md-pos="1601-2456"><code md-pos="1624-2433">const head = {
+     /*
+         Angaben in Bytes über die Übermittelten Daten: &lt;Start&gt;-&lt;Ende&gt;/&lt;FileSizeGesamt&gt;
+     */
+     'Content-Range': `bytes ${start}-${end}/${fileSize}`,
+     'Accept-Ranges': 'bytes',
+     /*
+         Größe des Chunkes ^= end - start + 1 (+ 1 um Array 0 Indexing auszugleichen)
+     */
+     'Content-Length': chunksize,
+     /*
+         Content-Type hard-coded auf mp4, falls andere Videoformate verfügbar,
+         muss dynamisch sein/von File ableiten
+     */
+     'Content-Type': 'video/mp4',
+};
+</code></pre>
+                                </li>
+                                <li md-pos="2471-2846">Response senden<br/>
+                                    Header mit Code 206 auf Stream schreiben. Code 206 bedeutet, dass es sich partial content handelt und der Client den Rest noch anfragen muss. Das File wird anschließend in den Responsebody geschrieben.
+                                    <pre md-pos="2732-2847"><code md-pos="2755-2824">    res.writeHead(206, head);
+    file.pipe(res);
+</code></pre>
+                                </li>
+                            </ol>
+                        </li>
+                        <li md-pos="2858-3621"><code md-pos="2864-2870">r[x,_[</code>:
+                            <ol>
+                                <li md-pos="2890-3359">Response-Header erzeugen<br/>
+                                    Header mit Filesize, da das File auf einmal geladen wird. Content-Type hard-coded auf mp4, falls andere Videoformate verfügbar, muss dynamisch von File ableitent werden.
+                                    <pre md-pos="3151-3360"><code md-pos="3174-3337">    const head = {
+         'Content-Length': fileSize,
+         'Content-Type': 'video/mp4',
+    []() };
+</code></pre>
+                                </li>
+                                <li md-pos="3375-3621">Response senden<br/>
+                                    Header mit Code 200, da alles übermittelt wird.
+                                    <pre md-pos="3486-3632"><code md-pos="3509-3599">    res.writeHead(200, head);
+    fs.createReadStream(path).pipe(res);
+</code></pre>
+                                </li>
+                            </ol>
+                        </li>
+                    </ol>
+                </li>
+            </ol>
+        </li>
+    </ol>
+</div>
+</body>
+</html>

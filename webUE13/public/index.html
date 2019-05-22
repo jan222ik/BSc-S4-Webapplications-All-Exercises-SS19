@@ -1,0 +1,29 @@
+<html>
+
+<head>
+  <title>Express</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script>
+    function loadVideo() {
+      let div = document.getElementById("vp");
+      let name = document.getElementById("vn").value;
+      console.log(name);
+      if (name !== undefined && name !== null && name.length > 0) {
+        console.log(`Search Video: ${name}`);
+        div.innerHTML = `<video controls autoplay><source src="/video?vid=${name}" type="video/mp4"></video>`;
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <h1>VideoLoader</h1>
+  <form>
+    <input id="vn" type="text" value="">
+    <input type="button" value="OK" onclick="loadVideo()">
+  </form>
+  <div id="vp">
+  </div>
+</body>
+
+</html>
