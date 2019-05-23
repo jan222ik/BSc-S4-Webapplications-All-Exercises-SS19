@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes"/>
+    <meta name="description" content="Login fehlgeschlagen"/>
+    <meta name="author" content="Janik Mayr"/>
+    <meta name="rating" content="safe for kids"/>
+    <meta name="reply-to" content="admin@host.com"/>
+    <meta name="distribution" content="global"/>
+    <meta http-equiv="refresh" content="43200"/>
+    <meta name="keywords"
+          content="Schützenverein,Freischütz,Geltendorf,
+                    Luftgewehr,Luftpistole,Lichtgewehr,
+                    Jugend,Gemeinschaft,1929,
+                    82269,Verein"
+    />
+
+
+    <title>Freischütz Geltendorf - JSF</title>
+
+    <link rel="stylesheet" type="text/css" href="style.css?v=4.0"/>
+    <link rel="stylesheet" type="text/css" href="webVars.css?v=4.0"/>
+    <link rel="stylesheet" type="text/css" href="printVars.css?v=4.0" media="print"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        document.cookie = "last=" + window.location.href + "; expires=" + new Date(new Date().getTime() + 24 * 60 * 60 * 1000) + ";";
+        $(document).ready(function () {
+            $('#nav').load("nav.jsp");
+            $('#footer').load("footer.html");
+        });
+    </script>
+</head>
+<body>
+<div id="nav">
+</div>
+<div id="content">
+    <div>
+        <h1>
+            Wettkampfteilnahme für: <h:outputLabel value="#{mainFormBean.name}"/>
+        </h1>
+    </div>
+    <div id="main">
+        <h:outputLabel value="#{competitionBean.getCompetitionInfoAsString(competitionSupplierBean)}"/>
+        <h:form>
+            Teilnahmebestätigung:
+            <h:selectOneRadio value="#{competitionBean.participation}" id="teilnahme" requiredMessage="Ausfüllen !" required="true">
+                <f:selectItem itemValue="ja;" itemLabel="ja"/>
+                <f:selectItem itemValue="nein;" itemLabel="nein"/>
+            </h:selectOneRadio>
+            <h:message for="teilnahme" style="color: red"/><br/>
+            Eigene Anreise ?
+            <h:selectBooleanCheckbox value="#{competitionBean.selfDrive}"/>
+            <br/>
+            Kann mitnehmen ?
+            <h:selectOneMenu value="#{competitionBean.lift}">
+                <f:selectItem itemValue="0" itemLabel="0"/>
+                <f:selectItem itemValue="1" itemLabel="1"/>
+                <f:selectItem itemValue="2" itemLabel="2"/>
+                <f:selectItem itemValue="3" itemLabel="3"/>
+                <f:selectItem itemValue="4" itemLabel="4"/>
+                <f:selectItem itemValue="5" itemLabel="5"/>
+                <f:selectItem itemValue="6" itemLabel="6"/>
+                <f:selectItem itemValue="7" itemLabel="7"/>
+                <f:selectItem itemValue="8" itemLabel="8"/>
+                <f:selectItem itemValue="9" itemLabel="9"/>
+                <f:selectItem itemValue="10" itemLabel="10"/>
+            </h:selectOneMenu>
+            <br/>
+            Kommentar:<br/>
+            <h:inputTextarea cols="5" value="#{competitionBean.comment}"/>
+
+            <h:commandButton value="Absenden" action="#{competitionBean.submit()}"/>
+        </h:form>
+    </div>
+</div>
+<div id="footer">
+</div>
+</body>
+</html>

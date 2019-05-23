@@ -1,5 +1,6 @@
 package com.github.jan222ik;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,6 +12,12 @@ import java.util.regex.Pattern;
 
 
 public class CountCharsServlet extends HttpServlet {
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        System.out.println(getServletContext().getContextPath());
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

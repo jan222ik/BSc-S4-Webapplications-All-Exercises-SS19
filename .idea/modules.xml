@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/jsfProject/jsfProject.iml" filepath="$PROJECT_DIR$/jsfProject/jsfProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/webUE13/webUE13.iml" filepath="$PROJECT_DIR$/webUE13/webUE13.iml" />
+      <module fileurl="file://$PROJECT_DIR$/webUE14/webUE14.iml" filepath="$PROJECT_DIR$/webUE14/webUE14.iml" />
     </modules>
   </component>
 </project>
