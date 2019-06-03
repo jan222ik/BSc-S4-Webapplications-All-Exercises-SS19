@@ -10,5 +10,8 @@ angular.module('myApp.view1', ['ngRoute'])
 }])
 
 .controller('View1Ctrl', [function() {
+}])
 
-}]);
+.evalDatepicker(['evalDatepicker'], function () {
+  console.log("This is the DATE:", this.datepicker);
+})

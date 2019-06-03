@@ -1,0 +1,16 @@
+<div>
+  <script>
+    function submit() {
+      document.getElementById("form").submit();
+    }
+  </script>
+  <form id="form">
+    <label for="datepicker"></label><input id="datepicker" name="datepicker" type="date" onSelect="submit()"
+                                           [(ngModel)]="datepicker">
+    <!--button type="submit">Submit</button-->
+  </form>
+</div>
+<div>
+  You picked {{datepicker}}
+</div>
+

@@ -1,4 +1,5 @@
-<p>This is the partialersxdfhjlöpäüälpikjfxdghjklöpälpgftrefdgtjklä#
-    ölpkijgdsfghjklpöäfor view 1.</p>
-<input [matDatepicker]="myDatepicker">
-<mat-datepicker #myDatepicker></mat-datepicker>
+<p>Very fancy datepicker</p>
+<div ng-controller="View1Ctrl">
+    <input id="datepicker" name="datepicker" [(ngmodel)]="datepicker" type="date">
+    <button (click)="evalDatepicker()">Click Me</button>
+</div>
